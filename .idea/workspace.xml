@@ -5,30 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18dd1b98-15f8-4db4-8867-cf5df5a0459c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BusinessManagementSystem.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/Customer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/GoodsReceiveNote.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/Invoice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/Item.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/Supplier.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/AdminService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/CustomerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/InvoiceService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/ItemService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/StockService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/SupplierService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/EmailSender.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/ReportGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/UserInput.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/mysql-connector-j-8.4.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/entities/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/GoodsReceiveNoteService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/DBConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/IDGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessManagementSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManagementSystem.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/GoodsReceiveNote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/GoodsReceiveNote.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Invoice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Supplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Supplier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/CustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/InvoiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/InvoiceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/ItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ItemService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/StockService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/StockService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/SupplierService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/SupplierService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/EmailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/ReportGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ReportGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/UserInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/UserInput.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,18 +70,28 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projects",
+    "last_opened_file_path": "D:/Projects/BusinessManagementSystem/lib/mysql-connector-j-8.4.0.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Problems",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\BusinessManagementSystem\lib" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

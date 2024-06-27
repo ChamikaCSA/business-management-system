@@ -14,7 +14,7 @@ public class UserInput {
                 if (input >= min && input <= max) {
                     return input;
                 } else {
-                    System.out.println("Please enter a value between " + min + " and " + max + ".");
+                    System.out.println(STR."Please enter a value between \{min} and \{max}.");
                 }
             } else {
                 System.out.println("Invalid input. Please enter a number.");
@@ -50,7 +50,7 @@ public class UserInput {
                 if (input >= min && input <= max) {
                     return input;
                 } else {
-                    System.out.println("Please enter a value between " + min + " and " + max + ".");
+                    System.out.println(STR."Please enter a value between \{min} and \{max}.");
                 }
             } else {
                 System.out.println("Invalid input. Please enter a decimal number.");

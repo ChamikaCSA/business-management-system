@@ -39,10 +39,6 @@ public class Supplier {
 
     @Override
     public String toString() {
-        return "Supplier{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return STR."Supplier{id='\{id}\{'\''}, name='\{name}\{'\''}, email='\{email}\{'\''}\{'}'}";
     }
 }

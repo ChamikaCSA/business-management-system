@@ -61,12 +61,6 @@ public class GoodsReceiveNote {
 
     @Override
     public String toString() {
-        return "GoodsReceiveNote{" +
-                "id='" + id + '\'' +
-                ", supplier=" + supplier +
-                ", item=" + item +
-                ", receiveDate=" + receiveDate +
-                ", quantity=" + quantity +
-                '}';
+        return STR."GoodsReceiveNote{id='\{id}\{'\''}, supplier=\{supplier}, item=\{item}, receiveDate=\{receiveDate}, quantity=\{quantity}\{'}'}";
     }
 }

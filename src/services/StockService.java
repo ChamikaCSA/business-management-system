@@ -1,26 +1,32 @@
 package services;
 
-import entities.Item;
+import utils.DBConnection;
+
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class StockService {
-    private ItemService itemService;
+    private final Map<String, Integer> stock = new HashMap<>();
 
-    public StockService(ItemService itemService) {
-        this.itemService = itemService;
+    public StockService() {
     }
 
     public void updateStock(String itemId, int quantity) {
-        Item item = itemService.getItemById(itemId);
-        if (item != null) {
-            item.setQuantity(item.getQuantity() + quantity);
+        String sql = "UPDATE Items SET quantity = quantity + ? WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, quantity);
+            stmt.setString(2, itemId);
+            stmt.executeUpdate();
+            int updatedQuantity = stock.getOrDefault(itemId, 0) + quantity;
+            stock.put(itemId, updatedQuantity);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public ItemService getItemService() {
-        return itemService;
-    }
-
-    public void setItemService(ItemService itemService) {
-        this.itemService = itemService;
+    public int getStockQuantity(String itemId) {
+        return stock.getOrDefault(itemId, 0);
     }
 }

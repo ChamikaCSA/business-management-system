@@ -1,16 +1,20 @@
 package entities;
 
-public class Customer {
+
+public class User {
     private String id;
     private String name;
     private String email;
+    private String type;
 
-    public Customer() {}
+    public User() {
+    }
 
-    public Customer(String id, String name, String email) {
+    public User(String id, String name, String email, String type) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.type = type;
     }
 
     public String getId() {
@@ -37,8 +41,16 @@ public class Customer {
         this.email = email;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
-        return STR."Customer{id='\{id}\{'\''}, name='\{name}\{'\''}, email='\{email}\{'\''}\{'}'}";
+        return STR."User{id='\{id}\{'\''}, name='\{name}\{'\''}, email='\{email}\{'\''}, type='\{type}\{'\''}\{'}'}";
     }
 }
