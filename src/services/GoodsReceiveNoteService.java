@@ -12,6 +12,32 @@ import java.util.Map;
 public class GoodsReceiveNoteService {
     private final Map<String, GoodsReceiveNote> goodsReceiveNoteRegistry = new HashMap<>();
 
+    public GoodsReceiveNoteService() {
+        String sql = "SELECT * FROM GoodsReceiveNotes";
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                GoodsReceiveNote grn = new GoodsReceiveNote();
+                grn.setId(rs.getString("id"));
+                grn.setReceiveDate(rs.getDate("receiveDate"));
+                grn.setQuantity(rs.getInt("quantity"));
+
+                String supplierId = rs.getString("supplierId");
+                Supplier supplier = new SupplierService().getSupplierById(supplierId);
+                grn.setSupplier(supplier);
+
+                String itemId = rs.getString("itemId");
+                Item item = new ItemService().getItemById(itemId);
+                grn.setItem(item);
+
+                goodsReceiveNoteRegistry.put(grn.getId(), grn);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void registerGoodsReceiveNote(GoodsReceiveNote grn) {
         String sql = "INSERT INTO GoodsReceiveNotes (id, supplierId, itemId, receiveDate, quantity) " +
                 "VALUES (?, ?, ?, ?, ?)";
@@ -60,32 +86,6 @@ public class GoodsReceiveNoteService {
     }
 
     public Map<String, GoodsReceiveNote> getGoodsReceiveNotes() {
-        Map<String, GoodsReceiveNote> grnRegistry = new HashMap<>();
-        String sql = "SELECT * FROM GoodsReceiveNotes";
-        try (Connection conn = DBConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                String grnId = rs.getString("id");
-                String supplierId = rs.getString("supplierId");
-                String itemId = rs.getString("itemId");
-                Date receiveDate = rs.getDate("receiveDate");
-                int quantity = rs.getInt("quantity");
-
-                // Retrieve supplier and item details
-                SupplierService supplierService = new SupplierService();
-                Supplier supplier = supplierService.getSupplierById(supplierId);
-
-                ItemService itemService = new ItemService();
-                Item item = itemService.getItemById(itemId);
-
-                // Create GoodsReceiveNote object
-                GoodsReceiveNote grn = new GoodsReceiveNote(grnId, supplier, item, receiveDate, quantity);
-                grnRegistry.put(grnId, grn);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return grnRegistry;
+        return goodsReceiveNoteRegistry;
     }
 }

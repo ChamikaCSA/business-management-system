@@ -1,9 +1,11 @@
 package app;
 
+import GUI.AppGUI;
 import entities.*;
 import services.*;
 import utils.*;
 
+import javax.swing.*;
 import java.util.*;
 
 public class App {
@@ -13,38 +15,49 @@ public class App {
         CustomerService customerService = new CustomerService();
         InvoiceService invoiceService = new InvoiceService();
         StockService stockService = new StockService();
-        UserService userService = new UserService(invoiceService);
+        UserService userService = new UserService();
         GoodsReceiveNoteService goodsReceiveNoteService = new GoodsReceiveNoteService();
 
         Scanner scanner = new Scanner(System.in);
-        boolean exit = false;
 
-        while (!exit) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new AppGUI();
+            }
+        });
+
+        boolean loggedIn = false;
+        String userType  = null;
+
+        while (!loggedIn) {
             try {
-                System.out.println("\nWelcome to the Inventory Management System");
-                System.out.println("1. Worker");
-                System.out.println("2. Admin");
-                System.out.println("0. Exit");
-                int choice = UserInput.getIntInput(scanner, "Select role: ", 0, 2);
+                System.out.println("Login to Inventory Management System");
+                String email = UserInput.getStringInput(scanner, "Enter email: ");
+                String password = UserInput.getStringInput(scanner, "Enter password: ");
 
-                switch (choice) {
-                    case 1:
-                        workerMenu(scanner, userService, itemService, supplierService, customerService, invoiceService, stockService, goodsReceiveNoteService);
-                        break;
-                    case 2:
+                userType = userService.authenticateUser(email, password);
+
+                if (userType != null) {
+                    System.out.println("Login successful.");
+                    loggedIn = true;
+
+                    if (userType.equalsIgnoreCase("admin")) {
                         adminMenu(scanner, userService, itemService, supplierService, customerService, invoiceService, stockService, goodsReceiveNoteService);
-                        break;
-                    case 0:
-                        exit = true;
-                        break;
-                    default:
-                        System.out.println("Invalid choice. Please try again.");
+                    } else if (userType.equalsIgnoreCase("worker")) {
+                        workerMenu(scanner, userService, itemService, supplierService, customerService, invoiceService, stockService, goodsReceiveNoteService);
+                    } else {
+                        System.out.println("Unknown user type. Exiting...");
+                    }
+
+                } else {
+                    System.out.println("Invalid username or password. Please try again.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println(STR."Input error: \{e.getMessage()}");
+                System.out.println("Input error: " + e.getMessage());
                 scanner.nextLine(); // Clear invalid input
             } catch (Exception e) {
-                System.out.println(STR."An error occurred: \{e.getMessage()}");
+                System.out.println("An error occurred: " + e.getMessage());
             }
         }
         scanner.close();
@@ -344,6 +357,7 @@ public class App {
 
         user.setName(UserInput.getStringInput(scanner, "Enter User Name: "));
         user.setEmail(UserInput.getStringInput(scanner, "Enter User Email: ", UserInput.EMAIL_REGEX));
+        user.setPassword(UserInput.getStringInput(scanner, "Enter User Password: "));
         String userType = UserInput.getStringInput(scanner, "Enter User Type (worker/admin): ");
         if (!userType.equalsIgnoreCase("worker") && !userType.equalsIgnoreCase("admin")) {
             System.out.println("Invalid user type. Must be 'worker' or 'admin'.");
@@ -362,12 +376,13 @@ public class App {
         }
         String updateUserName = UserInput.getStringInput(scanner, "Enter New User Name: ");
         String updateUserEmail = UserInput.getStringInput(scanner, "Enter New User Email: ", UserInput.EMAIL_REGEX);
+        String updateUserPassword = UserInput.getStringInput(scanner, "Enter New User Password: ");
         String updateUserType = UserInput.getStringInput(scanner, "Enter User Type (worker/admin): ");
         if (!updateUserType.equalsIgnoreCase("worker") && !updateUserType.equalsIgnoreCase("admin")) {
             System.out.println("Invalid user type. Must be 'worker' or 'admin'.");
             return;
         }
-        User updateUser = new User(updateUserId, updateUserName, updateUserEmail, updateUserType);
+        User updateUser = new User(updateUserId, updateUserName, updateUserEmail, updateUserPassword, updateUserType);
         userService.updateUser(updateUser);
         System.out.println("User updated successfully.");
     }

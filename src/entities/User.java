@@ -5,15 +5,17 @@ public class User {
     private String id;
     private String name;
     private String email;
+    private String password;
     private String type;
 
     public User() {
     }
 
-    public User(String id, String name, String email, String type) {
+    public User(String id, String name, String email, String password, String type) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.password = password;
         this.type = type;
     }
 
@@ -49,8 +51,16 @@ public class User {
         this.type = type;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
-        return STR."User{id='\{id}\{'\''}, name='\{name}\{'\''}, email='\{email}\{'\''}, type='\{type}\{'\''}\{'}'}";
+        return STR."User{id='\{id}\{'\''}, name='\{name}\{'\''}, email='\{email}\{'\''}, password='\{password}\{'\''}, type='\{type}\{'\''}\{'}'}";
     }
 }

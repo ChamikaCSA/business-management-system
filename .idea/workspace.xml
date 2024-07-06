@@ -4,31 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18dd1b98-15f8-4db4-8867-cf5df5a0459c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/mysql-connector-j-8.4.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/GoodsReceiveNoteService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/DBConnection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/IDGenerator.java" afterDir="false" />
+    <list default="true" id="18dd1b98-15f8-4db4-8867-cf5df5a0459c" name="Changes" comment="Implement detailed functionalities and refinements&#10;&#10;- Enhance `createInvoice` method in `App.java` to calculate total invoice amounts based on item quantities.&#10;- Refactor `InvoiceService` to correctly handle invoice creation and item linking in the database.&#10;- Update `GoodsReceiveNoteService` to ensure accurate recording of goods receive notes and stock updates.&#10;- Extend `EmailSender` functionality to handle notifications for invoices and goods receive notes.&#10;- Improve user input validation and error handling across worker and admin menus in `App.java`.&#10;- Implement consistent ID generation format for invoices and goods receive notes.&#10;- Fix bugs related to item registration and customer lookup in various services.&#10;- Optimize database interactions and queries for better performance.">
+      <change afterPath="$PROJECT_DIR$/src/GUI/AdminMenuPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/AppGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/CreateInvoicePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/RegisterItemPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/WorkerMenuPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/entities/ScaleLicense.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/ScaleLicenseService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessManagementSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManagementSystem.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/GoodsReceiveNote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/GoodsReceiveNote.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Invoice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Supplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Supplier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/CustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/GoodsReceiveNoteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/GoodsReceiveNoteService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/InvoiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/InvoiceService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/ItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ItemService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/StockService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/StockService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/SupplierService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/SupplierService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/EmailSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/ReportGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ReportGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/UserInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/UserInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +43,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -63,6 +60,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.App.executor": "Run",
+    "Application.AppGUI.executor": "Run",
     "Application.MainApp.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -79,6 +77,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -91,6 +90,18 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Projects\BusinessManagementSystem\lib" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Reset and Create.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+      <script-file value="$APPLICATION_CONFIG_DIR$/consoles/db/a71d9aab-d798-4f1f-aa46-f57cb7e3155b/Reset and Create.sql" />
+      <script-mode>FILE</script-mode>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Database Script.Reset and Create.sql" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -111,6 +122,8 @@
       <workItem from="1719158811313" duration="1875000" />
       <workItem from="1719160707645" duration="4501000" />
       <workItem from="1719484635855" duration="1352000" />
+      <workItem from="1719950724783" duration="4996000" />
+      <workItem from="1720285933530" duration="12019000" />
     </task>
     <servers />
   </component>
@@ -122,10 +135,26 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="false" />
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

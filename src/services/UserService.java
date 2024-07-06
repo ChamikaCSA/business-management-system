@@ -15,18 +15,36 @@ public class UserService {
     private final Map<String, User> userRegistry = new HashMap<>();
     private final InvoiceService invoiceService;
 
-    public UserService(InvoiceService invoiceService) {
-        this.invoiceService = invoiceService;
+    public UserService() {
+        this.invoiceService = new InvoiceService();
+        String sql = "SELECT * FROM Users";
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                User user = new User(
+                        rs.getString("id"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("type")
+                );
+                userRegistry.put(user.getId(), user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            }
     }
 
     public void addUser(User user) {
-        String sql = "INSERT INTO Users (id, name, email, type) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Users (id, name, email, password, type) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, user.getId());
             stmt.setString(2, user.getName());
             stmt.setString(3, user.getEmail());
-            stmt.setString(4, user.getType());
+            stmt.setString(4, user.getPassword());
+            stmt.setString(5, user.getType());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -34,13 +52,14 @@ public class UserService {
     }
 
     public void updateUser(User user) {
-        String sql = "UPDATE Users SET name = ?, email = ?, type = ? WHERE id = ?";
+        String sql = "UPDATE Users SET name = ?, email = ?, password = ?, type = ? WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getType());
-            stmt.setString(4, user.getId());
+            stmt.setString(4, user.getPassword());
+            stmt.setString(5, user.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -104,6 +123,7 @@ public class UserService {
                         rs.getString("id"),
                         rs.getString("name"),
                         rs.getString("email"),
+                        rs.getString("password"),
                         rs.getString("type")
                 );
             }
@@ -114,23 +134,22 @@ public class UserService {
     }
 
     public Map<String, User> getUserRegistry() {
-        if (userRegistry.isEmpty()) {
-            String sql = "SELECT * FROM Users";
-            try (Connection conn = DBConnection.getConnection();
-                 Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(sql)) {
-                while (rs.next()) {
-                    User user = new User();
-                    user.setId(rs.getString("id"));
-                    user.setName(rs.getString("name"));
-                    user.setEmail(rs.getString("email"));
-                    user.setType(rs.getString("type"));
-                    userRegistry.put(user.getId(), user);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
         return userRegistry;
+    }
+
+    public String  authenticateUser(String email, String password) {
+        String sql = "SELECT * FROM Users WHERE email = ? AND password = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("type");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -10,6 +10,23 @@ import java.util.Map;
 public class CustomerService {
     private final Map<String, Customer> customerRegistry = new HashMap<>();
 
+    public CustomerService() {
+        String sql = "SELECT * FROM Customers";
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Customer customer = new Customer();
+                customer.setId(rs.getString("id"));
+                customer.setName(rs.getString("name"));
+                customer.setEmail(rs.getString("email"));
+                customerRegistry.put(customer.getId(), customer);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void registerCustomer(Customer customer) {
         String sql = "INSERT INTO Customers (id, name, email) VALUES (?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
@@ -47,22 +64,6 @@ public class CustomerService {
     }
 
     public Map<String, Customer> getCustomerRegistry() {
-        if (customerRegistry.isEmpty()) {
-            String sql = "SELECT * FROM Customers";
-            try (Connection conn = DBConnection.getConnection();
-                 Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(sql)) {
-                while (rs.next()) {
-                    Customer customer = new Customer();
-                    customer.setId(rs.getString("id"));
-                    customer.setName(rs.getString("name"));
-                    customer.setEmail(rs.getString("email"));
-                    customerRegistry.put(customer.getId(), customer);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
         return customerRegistry;
     }
 }

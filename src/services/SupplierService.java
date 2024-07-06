@@ -10,6 +10,23 @@ import java.util.Map;
 public class SupplierService {
     private final Map<String, Supplier> supplierRegistry = new HashMap<>();
 
+    public SupplierService() {
+        String sql = "SELECT * FROM Suppliers";
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Supplier supplier = new Supplier();
+                supplier.setId(rs.getString("id"));
+                supplier.setName(rs.getString("name"));
+                supplier.setEmail(rs.getString("email"));
+                supplierRegistry.put(supplier.getId(), supplier);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void registerSupplier(Supplier supplier) {
         String sql = "INSERT INTO Suppliers (id, name, email) VALUES (?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
@@ -47,22 +64,6 @@ public class SupplierService {
     }
 
     public Map<String, Supplier> getSupplierRegistry() {
-        if (supplierRegistry.isEmpty()) {
-            String sql = "SELECT * FROM Suppliers";
-            try (Connection conn = DBConnection.getConnection();
-                 Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(sql)) {
-                while (rs.next()) {
-                    Supplier supplier = new Supplier();
-                    supplier.setId(rs.getString("id"));
-                    supplier.setName(rs.getString("name"));
-                    supplier.setEmail(rs.getString("email"));
-                    supplierRegistry.put(supplier.getId(), supplier);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
         return supplierRegistry;
     }
 }
