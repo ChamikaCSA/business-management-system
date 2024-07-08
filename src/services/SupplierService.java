@@ -66,4 +66,10 @@ public class SupplierService {
     public Map<String, Supplier> getSupplierRegistry() {
         return supplierRegistry;
     }
+
+    public void sendEmail(Supplier selectedSupplier, String emailSubject, String emailContent) {
+        System.out.println("Sending email to " + selectedSupplier.getEmail());
+        System.out.println("Subject: " + emailSubject);
+        System.out.println("Content: " + emailContent);
+    }
 }

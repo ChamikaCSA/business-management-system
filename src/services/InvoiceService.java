@@ -73,6 +73,7 @@ public class InvoiceService {
                 updateStmt.executeUpdate();
             }
         }
+
     }
 
     public Map<String, Invoice> getInvoiceRegistry() {

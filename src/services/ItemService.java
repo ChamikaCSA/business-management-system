@@ -84,4 +84,14 @@ public class ItemService {
     public Map<String, Item> getItemRegistry() {
         return itemRegistry;
     }
+
+    public String generateStockLevelReport() {
+        StringBuilder report = new StringBuilder();
+        for (Item item : itemRegistry.values()) {
+            report.append("Item: ").append(item.getName())
+                    .append(" - Stock: ").append(item.getQuantity())
+                    .append("\n");
+        }
+        return report.toString();
+    }
 }

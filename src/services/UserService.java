@@ -1,22 +1,16 @@
 package services;
 
-import entities.Invoice;
 import entities.User;
 import utils.DBConnection;
-import utils.ReportGenerator;
 
 import java.sql.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class UserService {
     private final Map<String, User> userRegistry = new HashMap<>();
-    private final InvoiceService invoiceService;
 
     public UserService() {
-        this.invoiceService = new InvoiceService();
         String sql = "SELECT * FROM Users";
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
@@ -46,6 +40,8 @@ public class UserService {
             stmt.setString(4, user.getPassword());
             stmt.setString(5, user.getType());
             stmt.executeUpdate();
+
+            userRegistry.put(user.getId(), user);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -61,6 +57,8 @@ public class UserService {
             stmt.setString(4, user.getPassword());
             stmt.setString(5, user.getId());
             stmt.executeUpdate();
+
+            userRegistry.replace(user.getId(), user);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -72,44 +70,11 @@ public class UserService {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, userId);
             stmt.executeUpdate();
+
+            userRegistry.remove(userId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public void viewReports() {
-        // Example using ReportGenerator class
-        String reportData = "Sample report data";
-        ReportGenerator.generateReport(reportData);
-    }
-
-    public void nextMonthSalesForecast() {
-        // Example sales forecasting logic
-        List<Invoice> invoices = invoiceService.getInvoiceRegistry().values().stream()
-                .toList();
-        double totalSales = invoices.stream().mapToDouble(Invoice::getTotalAmount).sum();
-        System.out.println(STR."Next Month Sales Forecast: \{totalSales * 1.1}"); // Assume a 10% growth
-    }
-
-    public void incomeAndSalesAnalysis() {
-        // Example income and sales analysis logic
-        List<Invoice> invoices = invoiceService.getInvoiceRegistry().values().stream()
-                .toList();
-        double totalIncome = invoices.stream().mapToDouble(Invoice::getTotalAmount).sum();
-        System.out.println(STR."Total Income: \{totalIncome}");
-        // Additional logic as needed
-    }
-
-    public double viewIncomeDetails() {
-        List<Invoice> invoices = invoiceService.getInvoiceRegistry().values().stream()
-                .toList();
-        return invoices.stream().mapToDouble(Invoice::getTotalAmount).sum();
-    }
-
-    public void renewScaleLicense(String scaleId) {
-        // Placeholder for renewing scale license logic
-        System.out.println(STR."Renewing scale license for scale ID: \{scaleId}");
-        // Additional logic for renewing the license
     }
 
     public User getUserById(String userId) {

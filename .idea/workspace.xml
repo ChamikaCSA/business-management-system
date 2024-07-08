@@ -4,25 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18dd1b98-15f8-4db4-8867-cf5df5a0459c" name="Changes" comment="Implement detailed functionalities and refinements&#10;&#10;- Enhance `createInvoice` method in `App.java` to calculate total invoice amounts based on item quantities.&#10;- Refactor `InvoiceService` to correctly handle invoice creation and item linking in the database.&#10;- Update `GoodsReceiveNoteService` to ensure accurate recording of goods receive notes and stock updates.&#10;- Extend `EmailSender` functionality to handle notifications for invoices and goods receive notes.&#10;- Improve user input validation and error handling across worker and admin menus in `App.java`.&#10;- Implement consistent ID generation format for invoices and goods receive notes.&#10;- Fix bugs related to item registration and customer lookup in various services.&#10;- Optimize database interactions and queries for better performance.">
-      <change afterPath="$PROJECT_DIR$/src/GUI/AdminMenuPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/AppGUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/CreateInvoicePanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/RegisterItemPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/WorkerMenuPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/ScaleLicense.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/ScaleLicenseService.java" afterDir="false" />
+    <list default="true" id="18dd1b98-15f8-4db4-8867-cf5df5a0459c" name="Changes" comment="Implement comprehensive features for admin functionalities">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/flatlaf_3_4_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/swingx_all_1_6_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/icons/eye.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/icons/hidden.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/icons/icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessManagementSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManagementSystem.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/AdminMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/AdminMenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/AppGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/AppGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/CreateInvoicePanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/RegisterItemPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/WorkerMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/WorkerMenuPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/CustomerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/GoodsReceiveNoteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/GoodsReceiveNoteService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/InvoiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/InvoiceService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/ItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ItemService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/StockService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/StockService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/ScaleLicenseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ScaleLicenseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/StockService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/SupplierService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/SupplierService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/ReportGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/UserInput.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +52,9 @@
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -59,22 +68,27 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.AdminMenuPanel.executor": "Run",
     "Application.App.executor": "Run",
     "Application.AppGUI.executor": "Run",
     "Application.MainApp.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projects/BusinessManagementSystem/lib/mysql-connector-j-8.4.0.jar",
+    "last_opened_file_path": "D:/Projects/BusinessManagementSystem/icons",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.pluginManager",
@@ -87,16 +101,31 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\BusinessManagementSystem\icons" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\BusinessManagementSystem\icons" />
       <recent name="D:\Projects\BusinessManagementSystem\lib" />
     </key>
   </component>
   <component name="RunManager">
+    <configuration name="App" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="app.App" />
+      <module name="BusinessManagementSystem" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Reset and Create.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
       <script-file value="$APPLICATION_CONFIG_DIR$/consoles/db/a71d9aab-d798-4f1f-aa46-f57cb7e3155b/Reset and Create.sql" />
       <script-mode>FILE</script-mode>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.App" />
+      <item itemvalue="Database Script.Reset and Create.sql" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Database Script.Reset and Create.sql" />
@@ -123,8 +152,19 @@
       <workItem from="1719160707645" duration="4501000" />
       <workItem from="1719484635855" duration="1352000" />
       <workItem from="1719950724783" duration="4996000" />
-      <workItem from="1720285933530" duration="12019000" />
+      <workItem from="1720285933530" duration="46927000" />
+      <workItem from="1720333869988" duration="1046000" />
+      <workItem from="1720393205451" duration="14168000" />
     </task>
+    <task id="LOCAL-00001" summary="Implement comprehensive features for admin functionalities">
+      <option name="closed" value="true" />
+      <created>1720298255278</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1720298255278</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -146,6 +186,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Implement comprehensive features for admin functionalities" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement comprehensive features for admin functionalities" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

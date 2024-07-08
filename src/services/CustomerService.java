@@ -66,4 +66,10 @@ public class CustomerService {
     public Map<String, Customer> getCustomerRegistry() {
         return customerRegistry;
     }
+
+    public void sendEmail(Customer selectedCustomer, String emailSubject, String emailContent) {
+        System.out.println("Sending email to " + selectedCustomer.getEmail());
+        System.out.println("Subject: " + emailSubject);
+        System.out.println("Content: " + emailContent);
+    }
 }

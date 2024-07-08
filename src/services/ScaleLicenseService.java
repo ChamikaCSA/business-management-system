@@ -1,7 +1,6 @@
 package services;
 
 import entities.ScaleLicense;
-import org.w3c.dom.ls.LSOutput;
 import utils.DBConnection;
 
 import java.sql.*;
