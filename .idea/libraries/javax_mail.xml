@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="swingx-all-1.6.4">
+  <library name="javax.mail">
     <CLASSES>
-      <root url="jar://C:/Java Libraries/swingx-all-1.6.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javax.mail.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

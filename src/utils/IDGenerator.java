@@ -13,4 +13,14 @@ public class IDGenerator {
         String datePart = sdf.format(new Date());
         return String.format("%s-%s-%03d", prefix, datePart, count);
     }
+
+    public static String generateRandomPassword() {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder password = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            int index = (int) (Math.random() * chars.length());
+            password.append(chars.charAt(index));
+        }
+        return password.toString();
+    }
 }

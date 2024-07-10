@@ -6,11 +6,17 @@ import utils.DBConnection;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ItemService {
-    private final Map<String, Item> itemRegistry = new HashMap<>();
+    private final Map<String, Item> itemRegistry = new TreeMap<>();
 
     public ItemService() {
+        updateRegistry();
+    }
+
+    public void updateRegistry() {
+        itemRegistry.clear();
         String sql = "SELECT * FROM Items";
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
@@ -28,7 +34,12 @@ public class ItemService {
         }
     }
 
-    public void registerItem(Item item) {
+    public Map<String, Item> getItemRegistry() {
+        updateRegistry();
+        return itemRegistry;
+    }
+
+    public void insertItem(Item item) {
         String sql = "INSERT INTO Items (id, name, price, quantity) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -37,6 +48,7 @@ public class ItemService {
             stmt.setDouble(3, item.getPrice());
             stmt.setInt(4, item.getQuantity());
             stmt.executeUpdate();
+
             itemRegistry.put(item.getId(), item);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,37 +64,28 @@ public class ItemService {
             stmt.setInt(3, item.getQuantity());
             stmt.setString(4, item.getId());
             stmt.executeUpdate();
+
             itemRegistry.put(item.getId(), item);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public Item getItemById(String id) {
-        Item item = itemRegistry.get(id);
-        if (item == null) {
-            String sql = "SELECT * FROM Items WHERE id = ?";
-            try (Connection conn = DBConnection.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, id);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    item = new Item();
-                    item.setId(rs.getString("id"));
-                    item.setName(rs.getString("name"));
-                    item.setPrice(rs.getDouble("price"));
-                    item.setQuantity(rs.getInt("quantity"));
-                    itemRegistry.put(id, item);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+    public void deleteItem(String id) {
+        String sql = "DELETE FROM Items WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, id);
+            stmt.executeUpdate();
+
+            itemRegistry.remove(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return item;
     }
 
-    public Map<String, Item> getItemRegistry() {
-        return itemRegistry;
+    public Item getItemById(String id) {
+        return itemRegistry.get(id);
     }
 
     public String generateStockLevelReport() {

@@ -4,31 +4,44 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18dd1b98-15f8-4db4-8867-cf5df5a0459c" name="Changes" comment="Implement comprehensive features for admin functionalities">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/flatlaf_3_4_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/swingx_all_1_6_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/eye.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/hidden.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/icon.png" afterDir="false" />
+    <list default="true" id="18dd1b98-15f8-4db4-8867-cf5df5a0459c" name="Changes" comment="Add complete GUI functionality with authentication and role-based menu navigation&#10;&#10;- Implemented a Java Swing application (AppGUI) for a Business Management System&#10;- Added login authentication with email validation and password show/hide toggle&#10;- Integrated service layers (Customer, GoodsReceiveNote, Invoice, Item, ScaleLicense, Supplier, User)&#10;- Designed admin and worker menus with respective functionalities&#10;- Created report and task panels for comprehensive user interaction&#10;- Ensured error handling and progress indicators for user feedback">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/javax_annotation.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/activation.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/flatlaf-3.4.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/javax.mail.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/CustomerDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/CustomerPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/GoodsReceiveNoteDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/GoodsReceiveNotePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/InvoiceDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/InvoicePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/ItemDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/ItemPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/SupplierDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/SupplierPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/UserDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/UserPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/Validation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/flatlaf_3_4_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/flatlaf_3_4_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/swingx_all_1_6_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/javax_mail.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BusinessManagementSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManagementSystem.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/AdminMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/AdminMenuPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/AppGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/AppGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/CreateInvoicePanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/RegisterItemPanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/WorkerMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/WorkerMenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/AdminMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AdminMenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/AppGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AppGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/WorkerMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/WorkerMenuPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/GoodsReceiveNote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/GoodsReceiveNote.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Invoice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/CustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/GoodsReceiveNoteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/GoodsReceiveNoteService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/InvoiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/InvoiceService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/ItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ItemService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/ScaleLicenseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ScaleLicenseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/StockService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/SupplierService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/SupplierService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/ReportGenerator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/UserInput.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/EmailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/IDGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/IDGenerator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +84,14 @@
     "Application.AdminMenuPanel.executor": "Run",
     "Application.App.executor": "Run",
     "Application.AppGUI.executor": "Run",
+    "Application.CustomerPanel.executor": "Run",
+    "Application.GoodsReceiveNotePanel.executor": "Run",
+    "Application.InvoicePanel.executor": "Run",
+    "Application.ItemPanel.executor": "Run",
     "Application.MainApp.executor": "Run",
+    "Application.ScaleLicensePanel.executor": "Run",
+    "Application.UserPanel.executor": "Run",
+    "Application.WorkerMenuPanel.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
@@ -82,13 +102,13 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projects/BusinessManagementSystem/icons",
+    "last_opened_file_path": "D:/Projects/BusinessManagementSystem/lib/activation.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.pluginManager",
@@ -101,12 +121,18 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="gui" />
+      <recent name="GUI" />
+      <recent name="services" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\BusinessManagementSystem\lib" />
       <recent name="D:\Projects\BusinessManagementSystem\icons" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Projects\BusinessManagementSystem\icons" />
       <recent name="D:\Projects\BusinessManagementSystem\lib" />
+      <recent name="D:\Projects\BusinessManagementSystem\icons" />
     </key>
   </component>
   <component name="RunManager">
@@ -154,7 +180,13 @@
       <workItem from="1719950724783" duration="4996000" />
       <workItem from="1720285933530" duration="46927000" />
       <workItem from="1720333869988" duration="1046000" />
-      <workItem from="1720393205451" duration="14168000" />
+      <workItem from="1720393205451" duration="41679000" />
+      <workItem from="1720479344890" duration="17026000" />
+      <workItem from="1720569793673" duration="29487000" />
+      <workItem from="1720599723658" duration="10000" />
+      <workItem from="1720602012624" duration="12000" />
+      <workItem from="1720603743966" duration="4656000" />
+      <workItem from="1720608443139" duration="5112000" />
     </task>
     <task id="LOCAL-00001" summary="Implement comprehensive features for admin functionalities">
       <option name="closed" value="true" />
@@ -164,7 +196,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720298255278</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add complete GUI functionality with authentication and role-based menu navigation&#10;&#10;- Implemented a Java Swing application (AppGUI) for a Business Management System&#10;- Added login authentication with email validation and password show/hide toggle&#10;- Integrated service layers (Customer, GoodsReceiveNote, Invoice, Item, ScaleLicense, Supplier, User)&#10;- Designed admin and worker menus with respective functionalities&#10;- Created report and task panels for comprehensive user interaction&#10;- Ensured error handling and progress indicators for user feedback">
+      <option name="closed" value="true" />
+      <created>1720409276824</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1720409276824</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,7 +229,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Implement comprehensive features for admin functionalities" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement comprehensive features for admin functionalities" />
+    <MESSAGE value="Add complete GUI functionality with authentication and role-based menu navigation&#10;&#10;- Implemented a Java Swing application (AppGUI) for a Business Management System&#10;- Added login authentication with email validation and password show/hide toggle&#10;- Integrated service layers (Customer, GoodsReceiveNote, Invoice, Item, ScaleLicense, Supplier, User)&#10;- Designed admin and worker menus with respective functionalities&#10;- Created report and task panels for comprehensive user interaction&#10;- Ensured error handling and progress indicators for user feedback" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add complete GUI functionality with authentication and role-based menu navigation&#10;&#10;- Implemented a Java Swing application (AppGUI) for a Business Management System&#10;- Added login authentication with email validation and password show/hide toggle&#10;- Integrated service layers (Customer, GoodsReceiveNote, Invoice, Item, ScaleLicense, Supplier, User)&#10;- Designed admin and worker menus with respective functionalities&#10;- Created report and task panels for comprehensive user interaction&#10;- Ensured error handling and progress indicators for user feedback" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

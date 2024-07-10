@@ -17,7 +17,16 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="flatlaf-3.4.1" level="project" />
-    <orderEntry type="library" name="swingx-all-1.6.4" level="project" />
-    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" name="javax.annotation" level="project" />
+    <orderEntry type="library" name="javax.mail" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/activation.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

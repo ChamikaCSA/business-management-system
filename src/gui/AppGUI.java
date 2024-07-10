@@ -1,6 +1,5 @@
-package GUI;
+package gui;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import services.*;
 
@@ -32,6 +31,7 @@ public class AppGUI extends JFrame {
     private JToggleButton showPasswordToggle;
     private JProgressBar progressBar;
     private JLabel statusLabel;
+    private static JTabbedPane tabbedPane;
 
     public AppGUI() {
         customerService = new CustomerService();
@@ -301,16 +301,20 @@ public class AppGUI extends JFrame {
         menuFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         menuFrame.setLocationRelativeTo(null);
 
-        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane = new JTabbedPane();
 
+        tabbedPane.addTab("User Dashboard", new WorkerMenuPanel(menuFrame, customerService, goodsReceiveNoteService, invoiceService,
+                itemService, scaleLicenseService, supplierService));
         if (userType.equalsIgnoreCase("admin")) {
-            tabbedPane.addTab("Admin Dashboard", new AdminMenuPanel(menuFrame, customerService, goodsReceiveNoteService, invoiceService,
-                    itemService, scaleLicenseService, supplierService, userService));
-            tabbedPane.addTab("Reports", createReportsPanel());
-        } else if (userType.equalsIgnoreCase("worker")) {
-            tabbedPane.addTab("Worker Dashboard", new WorkerMenuPanel(menuFrame, customerService, goodsReceiveNoteService, invoiceService,
-                    itemService, scaleLicenseService, supplierService));
-            tabbedPane.addTab("Tasks", createTasksPanel());
+            tabbedPane.addTab("Admin Dashboard", new AdminMenuPanel(menuFrame, invoiceService, itemService, userService));
+        }
+        tabbedPane.addTab("Items", new ItemPanel(menuFrame, itemService));
+        tabbedPane.addTab("Suppliers", new SupplierPanel(menuFrame, supplierService));
+        tabbedPane.addTab("Customers", new CustomerPanel(menuFrame, customerService));
+        tabbedPane.addTab("Invoices", new InvoicePanel(menuFrame, invoiceService, customerService, itemService));
+        tabbedPane.addTab("Goods Receive Notes", new GoodsReceiveNotePanel(menuFrame, goodsReceiveNoteService, itemService, supplierService));
+        if (userType.equalsIgnoreCase("admin")) {
+            tabbedPane.addTab("Users", new UserPanel(menuFrame, userService));
         }
 
         menuFrame.add(tabbedPane, BorderLayout.CENTER);
@@ -334,22 +338,8 @@ public class AppGUI extends JFrame {
         setVisible(false);
     }
 
-    private JPanel createReportsPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        JTextArea reportArea = new JTextArea();
-        reportArea.setEditable(false);
-        reportArea.setText("Reports content goes here...");
-        panel.add(new JScrollPane(reportArea), BorderLayout.CENTER);
-        return panel;
-    }
-
-    private JPanel createTasksPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        JTextArea taskArea = new JTextArea();
-        taskArea.setEditable(false);
-        taskArea.setText("Tasks content goes here...");
-        panel.add(new JScrollPane(taskArea), BorderLayout.CENTER);
-        return panel;
+    public static JTabbedPane getTabbedPane() {
+        return tabbedPane;
     }
 
     private void setStatus(String message, Color color) {

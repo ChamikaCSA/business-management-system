@@ -3,10 +3,11 @@ module BusinessManagementSystem {
     requires java.sql;
     requires java.desktop;
     requires com.formdev.flatlaf;
+    requires java.mail;
 
     exports app;
     exports entities;
     exports services;
     exports utils;
-    exports GUI;
+    exports gui;
 }

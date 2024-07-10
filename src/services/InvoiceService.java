@@ -11,9 +11,14 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 public class InvoiceService {
-    private final Map<String, Invoice> invoiceRegistry = new HashMap<>();
+    private final Map<String, Invoice> invoiceRegistry = new TreeMap<>();
 
     public InvoiceService() {
+        updateRegistry();
+    }
+
+    public void updateRegistry() {
+        invoiceRegistry.clear();
         String sql = "SELECT * FROM Invoices";
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
@@ -28,8 +33,8 @@ public class InvoiceService {
                 Customer customer = new CustomerService().getCustomerById(customerId);
                 invoice.setCustomer(customer);
 
-                List<Item> items = getInvoiceItems(invoice.getId());
-                invoice.setItems(items);
+                Map<Item, Integer> items = getInvoiceItems(invoice.getId());
+                invoice.setItemsMap(items);
 
                 invoiceRegistry.put(invoice.getId(), invoice);
             }
@@ -38,7 +43,12 @@ public class InvoiceService {
         }
     }
 
-    public void registerInvoice(Invoice invoice) {
+    public Map<String, Invoice> getInvoiceRegistry() {
+        updateRegistry();
+        return invoiceRegistry;
+    }
+
+    public void insertInvoice(Invoice invoice) {
         String sql = "INSERT INTO Invoices (id, customerId, date, totalAmount) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -48,7 +58,7 @@ public class InvoiceService {
             stmt.setDouble(4, invoice.getTotalAmount());
             stmt.executeUpdate();
 
-            saveInvoiceItemsAndUpdateStock(invoice);
+            insertInvoiceItemsAndUpdateStock(invoice);
 
             invoiceRegistry.put(invoice.getId(), invoice);
         } catch (SQLException e) {
@@ -56,42 +66,131 @@ public class InvoiceService {
         }
     }
 
-    private void saveInvoiceItemsAndUpdateStock(Invoice invoice) throws SQLException {
+    private void insertInvoiceItemsAndUpdateStock(Invoice invoice) throws SQLException {
         String sql = "INSERT INTO InvoiceItems (invoiceId, itemId, quantity) VALUES (?, ?, ?)";
         String updateStockSql = "UPDATE Items SET quantity = quantity - ? WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              PreparedStatement updateStmt = conn.prepareStatement(updateStockSql)) {
-            for (Item item : invoice.getItems()) {
+            for (Map.Entry<Item, Integer> entry : invoice.getItemsMap().entrySet()) {
+                Item item = entry.getKey();
+                int quantity = entry.getValue();
+
                 stmt.setString(1, invoice.getId());
                 stmt.setString(2, item.getId());
-                stmt.setInt(3, item.getQuantity());
+                stmt.setInt(3, quantity);
                 stmt.executeUpdate();
 
-                updateStmt.setInt(1, item.getQuantity());
+                updateStmt.setInt(1, quantity);
                 updateStmt.setString(2, item.getId());
                 updateStmt.executeUpdate();
             }
         }
-
     }
 
-    public Map<String, Invoice> getInvoiceRegistry() {
-        return invoiceRegistry;
+    public void updateInvoice(Invoice selectedInvoice) {
+        String sql = "UPDATE Invoices SET customerId = ?, date = ?, totalAmount = ? WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, selectedInvoice.getCustomer().getId());
+            stmt.setDate(2, new java.sql.Date(selectedInvoice.getDate().getTime()));
+            stmt.setDouble(3, selectedInvoice.getTotalAmount());
+            stmt.setString(4, selectedInvoice.getId());
+            stmt.executeUpdate();
+
+            updateInvoiceItemsAndUpdateStock(selectedInvoice);
+
+            invoiceRegistry.put(selectedInvoice.getId(), selectedInvoice);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    private List<Item> getInvoiceItems(String invoiceId) throws SQLException {
-        List<Item> items = new ArrayList<>();
-        String sql = "SELECT itemId FROM InvoiceItems WHERE invoiceId = ?";
+    private void updateInvoiceItemsAndUpdateStock(Invoice invoice) throws SQLException {
+        String deleteSql = "DELETE FROM InvoiceItems WHERE invoiceId = ?";
+        String insertSql = "INSERT INTO InvoiceItems (invoiceId, itemId, quantity) VALUES (?, ?, ?)";
+        String updateStockSql = "UPDATE Items SET quantity = quantity + ? WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement deleteStmt = conn.prepareStatement(deleteSql);
+             PreparedStatement insertStmt = conn.prepareStatement(insertSql);
+             PreparedStatement updateStmt = conn.prepareStatement(updateStockSql)) {
+            deleteStmt.setString(1, invoice.getId());
+            deleteStmt.executeUpdate();
+
+            for (Map.Entry<Item, Integer> entry : invoice.getItemsMap().entrySet()) {
+                Item item = entry.getKey();
+                int quantity = entry.getValue();
+
+                insertStmt.setString(1, invoice.getId());
+                insertStmt.setString(2, item.getId());
+                insertStmt.setInt(3, quantity);
+                insertStmt.executeUpdate();
+
+                updateStmt.setInt(1, quantity);
+                updateStmt.setString(2, item.getId());
+                updateStmt.executeUpdate();
+            }
+        }
+    }
+
+    public void deleteInvoice(String invoiceId) {
+        try {
+            deleteInvoiceItemsAndUpdateStock(invoiceId);
+
+            String sql = "DELETE FROM Invoices WHERE id = ?";
+            try (Connection conn = DBConnection.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, invoiceId);
+                stmt.executeUpdate();
+
+                invoiceRegistry.remove(invoiceId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteInvoiceItemsAndUpdateStock(String invoiceId) throws SQLException {
+        String deleteSql = "DELETE FROM InvoiceItems WHERE invoiceId = ?";
+        String updateStockSql = "UPDATE Items SET quantity = quantity + ? WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement deleteStmt = conn.prepareStatement(deleteSql);
+             PreparedStatement updateStmt = conn.prepareStatement(updateStockSql)) {
+            deleteStmt.setString(1, invoiceId);
+            deleteStmt.executeUpdate();
+
+            Map<Item, Integer> items = getInvoiceItems(invoiceId);
+            for (Map.Entry<Item, Integer> entry : items.entrySet()) {
+                Item item = entry.getKey();
+                int quantity = entry.getValue();
+
+                updateStmt.setInt(1, quantity);
+                updateStmt.setString(2, item.getId());
+                updateStmt.executeUpdate();
+            }
+        }
+    }
+
+    public Invoice getInvoiceById(String invoiceId) {
+        return invoiceRegistry.get(invoiceId);
+    }
+
+    private Map<Item, Integer> getInvoiceItems(String invoiceId) {
+        Map<Item, Integer> items = new HashMap<>();
+        String sql = "SELECT * FROM InvoiceItems WHERE invoiceId = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, invoiceId);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                String itemId = rs.getString("itemId");
-                Item item = new ItemService().getItemById(itemId);
-                items.add(item);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String itemId = rs.getString("itemId");
+                    Item item = new ItemService().getItemById(itemId);
+                    int quantity = rs.getInt("quantity");
+                    items.put(item, quantity);
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return items;
     }

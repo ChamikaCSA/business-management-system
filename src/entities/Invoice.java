@@ -1,21 +1,21 @@
 package entities;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 public class Invoice {
     private String id;
     private Customer customer;
-    private List<Item> items;
+    private Map<Item, Integer> itemsMap;
     private Date date;
     private double totalAmount;
 
     public Invoice() {}
 
-    public Invoice(String id, Customer customer, List<Item> items, Date date, double totalAmount) {
+    public Invoice(String id, Customer customer, Map<Item, Integer> itemsMap, Date date, double totalAmount) {
         this.id = id;
         this.customer = customer;
-        this.items = items;
+        this.itemsMap = itemsMap;
         this.date = date;
         this.totalAmount = totalAmount;
     }
@@ -36,12 +36,12 @@ public class Invoice {
         this.customer = customer;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public Map<Item, Integer> getItemsMap() {
+        return itemsMap;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setItemsMap(Map<Item, Integer> itemsMap) {
+        this.itemsMap = itemsMap;
     }
 
     public Date getDate() {
@@ -62,6 +62,6 @@ public class Invoice {
 
     @Override
     public String toString() {
-        return STR."Invoice{id='\{id}\{'\''}, customer=\{customer}, items=\{items}, date=\{date}, totalAmount=\{totalAmount}\{'}'}";
+        return STR."Invoice{id='\{id}\{'\''}, customer=\{customer}, itemsMap=\{itemsMap}, date=\{date}, totalAmount=\{totalAmount}\{'}'}";
     }
 }

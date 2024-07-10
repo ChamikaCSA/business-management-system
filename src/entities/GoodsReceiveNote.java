@@ -6,16 +6,16 @@ public class GoodsReceiveNote {
     private String id;
     private Supplier supplier;
     private Item item;
-    private Date receiveDate;
+    private Date receivedDate;
     private int quantity;
 
     public GoodsReceiveNote() {}
 
-    public GoodsReceiveNote(String id, Supplier supplier, Item item, Date receiveDate, int quantity) {
+    public GoodsReceiveNote(String id, Supplier supplier, Item item, Date receivedDate, int quantity) {
         this.id = id;
         this.supplier = supplier;
         this.item = item;
-        this.receiveDate = receiveDate;
+        this.receivedDate = receivedDate;
         this.quantity = quantity;
     }
 
@@ -43,12 +43,12 @@ public class GoodsReceiveNote {
         this.item = item;
     }
 
-    public Date getReceiveDate() {
-        return receiveDate;
+    public Date getReceivedDate() {
+        return receivedDate;
     }
 
-    public void setReceiveDate(Date receiveDate) {
-        this.receiveDate = receiveDate;
+    public void setReceivedDate(Date receivedDate) {
+        this.receivedDate = receivedDate;
     }
 
     public int getQuantity() {
@@ -61,6 +61,6 @@ public class GoodsReceiveNote {
 
     @Override
     public String toString() {
-        return STR."GoodsReceiveNote{id='\{id}\{'\''}, supplier=\{supplier}, item=\{item}, receiveDate=\{receiveDate}, quantity=\{quantity}\{'}'}";
+        return STR."GoodsReceiveNote{id='\{id}\{'\''}, supplier=\{supplier}, item=\{item}, receivedDate=\{receivedDate}, quantity=\{quantity}\{'}'}";
     }
 }
