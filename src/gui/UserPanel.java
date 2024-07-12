@@ -40,9 +40,7 @@ public class UserPanel extends JPanel {
 
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                return switch (columnIndex) {
-                    default -> String.class;
-                };
+                return String.class;
             }
         };
         userTable.setModel(tableModel);

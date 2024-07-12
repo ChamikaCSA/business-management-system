@@ -57,11 +57,11 @@ public class SupplierDialog extends JDialog {
         JPanel buttonPanel = new JPanel();
 
         JButton saveButton = new JButton("Save");
-        saveButton.addActionListener(e -> saveSupplier());
+        saveButton.addActionListener(_ -> saveSupplier());
         buttonPanel.add(saveButton);
 
         JButton cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(e -> dispose());
+        cancelButton.addActionListener(_ -> dispose());
         buttonPanel.add(cancelButton);
 
         gbc.gridx = 0;

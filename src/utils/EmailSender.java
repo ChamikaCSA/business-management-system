@@ -2,10 +2,12 @@ package utils;
 
 import javax.mail.*;
 import javax.mail.internet.*;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Properties;
 
 public class EmailSender {
-    public static void sendEmail(String to, String subject, String body) {
+    public static void sendEmail(String to, String subject, String body, Component parentComponent) {
         final String username = "yourEmail@example.com"; // Your email
         final String password = "yourPassword"; // Your email password
 
@@ -33,7 +35,7 @@ public class EmailSender {
 
             Transport.send(message);
 
-            System.out.println("Email sent successfully");
+            JOptionPane.showMessageDialog(parentComponent, body, "Email Sent", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (MessagingException e) {
             e.printStackTrace();

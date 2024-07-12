@@ -17,7 +17,9 @@ public class GoodsReceiveNoteService {
     }
 
     public void updateRegistry() {
+        goodsReceiveNoteRegistry.clear();
         String sql = "SELECT * FROM GoodsReceiveNotes";
+
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -86,13 +88,14 @@ public class GoodsReceiveNoteService {
         }
     }
 
-    public void deleteGoodsReceiveNoteById(String id) {
+    public void deleteGoodsReceiveNoteById(String grnId) {
         String sql = "DELETE FROM GoodsReceiveNotes WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, id);
+            stmt.setString(1, grnId);
             stmt.executeUpdate();
-            goodsReceiveNoteRegistry.remove(id);
+
+            goodsReceiveNoteRegistry.remove(grnId);
         } catch (SQLException e) {
             e.printStackTrace();
         }

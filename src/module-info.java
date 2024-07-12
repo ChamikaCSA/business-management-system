@@ -4,6 +4,7 @@ module BusinessManagementSystem {
     requires java.desktop;
     requires com.formdev.flatlaf;
     requires java.mail;
+    requires jfreechart;
 
     exports app;
     exports entities;

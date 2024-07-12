@@ -6,6 +6,7 @@ import entities.Item;
 import services.CustomerService;
 import services.InvoiceService;
 import services.ItemService;
+import services.PaymentService;
 import utils.EmailSender;
 import utils.IDGenerator;
 
@@ -20,20 +21,19 @@ public class InvoiceDialog extends JDialog {
     private final InvoiceService invoiceService;
     private final CustomerService customerService;
     private final ItemService itemService;
+    private final PaymentService paymentService;
 
     private JComboBox<Customer> customerComboBox;
     private JComboBox<Item> itemComboBox;
     private JTextField quantityField;
-    private String invoiceId;
     private final Map<Item, Integer> items = new HashMap<>();
-    private double totalAmount;
-    private Date date;
 
-    public InvoiceDialog(JFrame parentFrame, String title, InvoiceService invoiceService, CustomerService customerService, ItemService itemService) {
+    public InvoiceDialog(JFrame parentFrame, String title, InvoiceService invoiceService, CustomerService customerService, ItemService itemService, PaymentService paymentService) {
         super(parentFrame, title, true);
         this.invoiceService = invoiceService;
         this.customerService = customerService;
         this.itemService = itemService;
+        this.paymentService = paymentService;
 
         initialize(parentFrame);
     }
@@ -198,12 +198,15 @@ public class InvoiceDialog extends JDialog {
         }
 
         int invoiceCount = invoiceService.getInvoiceRegistry().size() + 1;
-        invoiceId = IDGenerator.generateDatedId("INV", invoiceCount);
-        date = new Date();
-        totalAmount = calculateTotalAmount(items);
+        String invoiceId = IDGenerator.generateDatedId("INV", invoiceCount);
+        Date date = new Date();
+        double totalAmount = calculateTotalAmount(items);
 
         Invoice invoice = new Invoice(invoiceId, customer, items, date, totalAmount);
         invoiceService.insertInvoice(invoice);
+
+        PaymentDialog paymentDialog = new PaymentDialog((JFrame) getParent(), "Payment", invoice, paymentService);
+        paymentDialog.setVisible(true);
 
         sendInvoice(invoice);
         dispose();
@@ -228,6 +231,6 @@ public class InvoiceDialog extends JDialog {
         }
         sb.append("\nTotal Amount: ").append(invoice.getTotalAmount());
 
-        EmailSender.sendEmail(invoice.getCustomer().getEmail(), "Invoice", sb.toString());
+        EmailSender.sendEmail(invoice.getCustomer().getEmail(), "Invoice", sb.toString(), getParent());
     }
 }

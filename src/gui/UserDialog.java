@@ -1,7 +1,6 @@
 package gui;
 
 import entities.User;
-import org.w3c.dom.ls.LSOutput;
 import services.UserService;
 import utils.IDGenerator;
 import utils.Validation;
@@ -78,13 +77,14 @@ public class UserDialog extends JDialog {
         gbc.gridx = 1;
         add(passwordField, gbc);
 
-        typeComboBox.addActionListener(e -> {
+        typeComboBox.addActionListener(_ -> {
             if (nameField.getText().isEmpty()) {
                 return;
             }
             String name = nameField.getText();
             String type = (String) typeComboBox.getSelectedItem();
 
+            assert type != null;
             String userEmail = STR."\{name.toLowerCase().replace(" ", ".")}.\{type.toLowerCase().replace(" ", ".")}@example.com";
             String userPassword = IDGenerator.generateRandomPassword();
 
@@ -98,6 +98,7 @@ public class UserDialog extends JDialog {
                 String name = nameField.getText();
                 String type = (String) typeComboBox.getSelectedItem();
 
+                assert type != null;
                 String userEmail = STR."\{name.toLowerCase().replace(" ", ".")}.\{type.toLowerCase().replace(" ", ".")}@example.com";
                 String userPassword = IDGenerator.generateRandomPassword();
 

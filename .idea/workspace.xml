@@ -4,44 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18dd1b98-15f8-4db4-8867-cf5df5a0459c" name="Changes" comment="Add complete GUI functionality with authentication and role-based menu navigation&#10;&#10;- Implemented a Java Swing application (AppGUI) for a Business Management System&#10;- Added login authentication with email validation and password show/hide toggle&#10;- Integrated service layers (Customer, GoodsReceiveNote, Invoice, Item, ScaleLicense, Supplier, User)&#10;- Designed admin and worker menus with respective functionalities&#10;- Created report and task panels for comprehensive user interaction&#10;- Ensured error handling and progress indicators for user feedback">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/javax_annotation.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/activation.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/flatlaf-3.4.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/javax.mail.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/CustomerDialog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/CustomerPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/GoodsReceiveNoteDialog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/GoodsReceiveNotePanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/InvoiceDialog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/InvoicePanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/ItemDialog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/ItemPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/SupplierDialog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/SupplierPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/UserDialog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/UserPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/Validation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/flatlaf_3_4_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/flatlaf_3_4_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/swingx_all_1_6_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/javax_mail.xml" afterDir="false" />
+    <list default="true" id="18dd1b98-15f8-4db4-8867-cf5df5a0459c" name="Changes" comment="Refactor and enhance GUI with refined functionality and UI improvements">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/jfreechart_1_0_19.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jcommon-1.0.23.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jfreechart-1.0.19.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/entities/Payment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/PaymentDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/PaymentPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/ReportAnalysisPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/python/forecast.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/PaymentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/Forecast.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/untitled.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/javax_annotation.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BusinessManagementSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManagementSystem.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/AdminMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AdminMenuPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/AppGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AppGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/WorkerMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/WorkerMenuPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/GoodsReceiveNote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/GoodsReceiveNote.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Invoice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/AdminMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AdminMenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/AppGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AppGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/CustomerDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/CustomerDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/GoodsReceiveNoteDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/GoodsReceiveNoteDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/InvoiceDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/InvoiceDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/InvoicePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/InvoicePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/ItemDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/ItemDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/SupplierDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SupplierDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/UserDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/UserDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/UserPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/UserPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/WorkerMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/WorkerMenuPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/CustomerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/GoodsReceiveNoteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/GoodsReceiveNoteService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/InvoiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/InvoiceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/ItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ItemService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/ScaleLicenseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ScaleLicenseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/SupplierService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/SupplierService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/EmailSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/IDGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/IDGenerator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +51,7 @@
         <option value="module-info" />
         <option value="JavaFXApplication" />
         <option value="FxmlFile" />
+        <option value="Python Script" />
         <option value="Class" />
       </list>
     </option>
@@ -89,10 +86,15 @@
     "Application.InvoicePanel.executor": "Run",
     "Application.ItemPanel.executor": "Run",
     "Application.MainApp.executor": "Run",
+    "Application.PaymentDialog.executor": "Run",
+    "Application.PaymentPanel.executor": "Run",
+    "Application.ReportAnalysisPanel.executor": "Run",
+    "Application.ReportPanel.executor": "Run",
     "Application.ScaleLicensePanel.executor": "Run",
     "Application.UserPanel.executor": "Run",
     "Application.WorkerMenuPanel.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
+    "Python.forecast.executor": "Run",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "false",
@@ -101,17 +103,18 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "openjdk-22",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projects/BusinessManagementSystem/lib/activation.jar",
+    "last_opened_file_path": "D:/Projects/BusinessManagementSystem/lib/jcommon-1.0.23.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "trusted.hosts",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -135,7 +138,7 @@
       <recent name="D:\Projects\BusinessManagementSystem\icons" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.App">
     <configuration name="App" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="app.App" />
       <module name="BusinessManagementSystem" />
@@ -148,9 +151,34 @@
       <script-mode>FILE</script-mode>
       <method v="2" />
     </configuration>
+    <configuration name="forecast" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="BusinessManagementSystem" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.12 (BusinessManagementSystem)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/python" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/python/forecast.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Application.App" />
       <item itemvalue="Database Script.Reset and Create.sql" />
+      <item itemvalue="Python.forecast" />
     </list>
     <recent_temporary>
       <list>
@@ -186,7 +214,11 @@
       <workItem from="1720599723658" duration="10000" />
       <workItem from="1720602012624" duration="12000" />
       <workItem from="1720603743966" duration="4656000" />
-      <workItem from="1720608443139" duration="5112000" />
+      <workItem from="1720608443139" duration="9723000" />
+      <workItem from="1720619629369" duration="9179000" />
+      <workItem from="1720671428121" duration="24867000" />
+      <workItem from="1720715995309" duration="12125000" />
+      <workItem from="1720748481757" duration="18485000" />
     </task>
     <task id="LOCAL-00001" summary="Implement comprehensive features for admin functionalities">
       <option name="closed" value="true" />
@@ -204,7 +236,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720409276824</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Refactor and enhance GUI with refined functionality and UI improvements">
+      <option name="closed" value="true" />
+      <created>1720613591816</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1720613591816</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -230,7 +270,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Implement comprehensive features for admin functionalities" />
     <MESSAGE value="Add complete GUI functionality with authentication and role-based menu navigation&#10;&#10;- Implemented a Java Swing application (AppGUI) for a Business Management System&#10;- Added login authentication with email validation and password show/hide toggle&#10;- Integrated service layers (Customer, GoodsReceiveNote, Invoice, Item, ScaleLicense, Supplier, User)&#10;- Designed admin and worker menus with respective functionalities&#10;- Created report and task panels for comprehensive user interaction&#10;- Ensured error handling and progress indicators for user feedback" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add complete GUI functionality with authentication and role-based menu navigation&#10;&#10;- Implemented a Java Swing application (AppGUI) for a Business Management System&#10;- Added login authentication with email validation and password show/hide toggle&#10;- Integrated service layers (Customer, GoodsReceiveNote, Invoice, Item, ScaleLicense, Supplier, User)&#10;- Designed admin and worker menus with respective functionalities&#10;- Created report and task panels for comprehensive user interaction&#10;- Ensured error handling and progress indicators for user feedback" />
+    <MESSAGE value="Refactor and enhance GUI with refined functionality and UI improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor and enhance GUI with refined functionality and UI improvements" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -241,5 +282,12 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/BusinessManagementSystem$forecast.coverage" NAME="forecast Coverage Results" MODIFIED="1720620807508" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/python" />
   </component>
 </project>

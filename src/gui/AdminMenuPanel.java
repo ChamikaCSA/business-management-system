@@ -1,29 +1,28 @@
 package gui;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import entities.User;
-import services.*;
-import utils.IDGenerator;
+import services.InvoiceService;
+import services.ItemService;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.io.BufferedReader;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 public class AdminMenuPanel extends JPanel {
     private final InvoiceService invoiceService;
     private final ItemService itemService;
-    private final UserService userService;
 
     private static final Logger LOGGER = Logger.getLogger(AdminMenuPanel.class.getName());
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[A-Za-z]{2,}$");
 
     public AdminMenuPanel(JFrame menuFrame,
-                          InvoiceService invoiceService, ItemService itemService, UserService userService) {
+                          InvoiceService invoiceService, ItemService itemService) {
         this.invoiceService = invoiceService;
         this.itemService = itemService;
-        this.userService = userService;
 
         initialize();
     }
@@ -56,7 +55,7 @@ public class AdminMenuPanel extends JPanel {
         reportsLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         mainPanel.add(reportsLabel, createGBC(0));
 
-        addButton(mainPanel, gbc, 0, 1, "View Reports", "icon.png", "view various reports such as sales or stock reports.", this::viewReports);
+        addButton(mainPanel, gbc, 0, 1, "Stock Report", "icon.png", "generate stock report.", this::viewReport);
         addButton(mainPanel, gbc, 1, 1, "Next Month Sales Forecast", "icon.png", "forecast sales for the next month.", this::nextMonthSalesForecast);
         addButton(mainPanel, gbc, 2, 1, "Income and Sales Analysis", "icon.png", "generate income and sales analysis report.", this::incomeAndSalesAnalysis);
 
@@ -65,6 +64,7 @@ public class AdminMenuPanel extends JPanel {
         mainPanel.add(userManagementLabel, createGBC(2));
 
         addButton(mainPanel, gbc, 0, 3, "View Users", "icon.png", "view and manage users.", this::viewUsers);
+
         add(mainPanel, BorderLayout.CENTER);
     }
 
@@ -109,69 +109,79 @@ public class AdminMenuPanel extends JPanel {
         return gbc;
     }
 
-    private void viewReports() {
-        JComboBox<String> reportComboBox = new JComboBox<>(new String[]{"Sales Report", "Stock Report"});
-
-        JPanel panel = new JPanel(new GridLayout(0, 1));
-        panel.add(new JLabel("Select Report:"));
-        panel.add(reportComboBox);
-
-        int result = JOptionPane.showConfirmDialog(null, panel, "View Reports",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (result != JOptionPane.OK_OPTION) {
-            return;
-        }
-
-        String selectedReport = (String) reportComboBox.getSelectedItem();
-
-        if ("Sales Report".equals(selectedReport)) {
-            try {
-                String report = invoiceService.generateMonthlySalesReport();
-                JOptionPane.showMessageDialog(this, report);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, STR."Error generating sales report: \{e.getMessage()}");
-            }
-        } else if ("Stock Report".equals(selectedReport)) {
-            try {
-                String report = itemService.generateStockLevelReport();
-                JOptionPane.showMessageDialog(this, report);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, STR."Error generating stock report: \{e.getMessage()}");
-            }
+    private void viewReport() {
+        try {
+            String report = itemService.generateStockLevelReport();
+            JOptionPane.showMessageDialog(this, report, "Stock Report", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, STR."Error generating stock report: \{e.getMessage()}", "Warning", JOptionPane.WARNING_MESSAGE);
+            LOGGER.severe(STR."Error generating stock report: \{e.getMessage()}");
         }
     }
 
     private void nextMonthSalesForecast() {
         try {
-            double forecast = invoiceService.forecastNextMonthSales();
-            JOptionPane.showMessageDialog(this, String.format("Next month's sales forecast is: $%.2f", forecast));
+            List<Double> salesData = invoiceService.getMonthlySalesData();
+            if (salesData.size() < 2) {
+                throw new Exception("Not enough data to perform forecasting.");
+            }
+
+            installPythonPackage("statsmodels");
+            String forecast = runPythonScript(salesData);
+            JOptionPane.showMessageDialog(this, STR."Next month's sales forecast is: $\{forecast}", "Sales Forecast", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, STR."Error forecasting sales: \{e.getMessage()}");
+            JOptionPane.showMessageDialog(this, STR."Error forecasting sales: \{e.getMessage()}", "Warning", JOptionPane.WARNING_MESSAGE);
+            LOGGER.severe(STR."Error forecasting sales: \{e.getMessage()}");
         }
+    }
+
+    private void installPythonPackage(String packageName) throws Exception {
+        ProcessBuilder processBuilder = new ProcessBuilder("pip", "install", packageName);
+        Process process = processBuilder.start();
+        int exitCode = process.waitFor();
+        if (exitCode != 0) {
+            throw new RuntimeException(STR."Failed to install Python package \{packageName}");
+        }
+    }
+
+    private String runPythonScript(List<Double> salesData) throws Exception {
+        List<String> command = new ArrayList<>();
+        command.add("python");
+        command.add("src/python/forecast.py");
+        for (Double data : salesData) {
+            command.add(data.toString());
+        }
+
+        ProcessBuilder processBuilder = new ProcessBuilder(command);
+        Process process = processBuilder.start();
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        StringBuilder result = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            result.append(line);
+        }
+
+        int exitCode = process.waitFor();
+        if (exitCode != 0) {
+            throw new RuntimeException(STR."Script execution failed with exit code \{exitCode}");
+        }
+
+        return result.toString();
     }
 
     private void incomeAndSalesAnalysis() {
         try {
             String report = invoiceService.generateIncomeAndSalesAnalysis();
-            JOptionPane.showMessageDialog(this, report);
+            JOptionPane.showMessageDialog(this, report, "Income and Sales Analysis", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, STR."Error generating income and sales analysis: \{e.getMessage()}");
+            JOptionPane.showMessageDialog(this, STR."Error generating income and sales analysis: \{e.getMessage()}", "Warning", JOptionPane.WARNING_MESSAGE);
+            LOGGER.severe(STR."Error generating income and sales analysis: \{e.getMessage()}");
         }
     }
 
     private void viewUsers() {
         JTabbedPane tabbedPane = AppGUI.getTabbedPane();
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab("Users"));
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Menu");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(1000, 800);
-            frame.add(new AdminMenuPanel(frame, new InvoiceService(), new ItemService(), new UserService()));
-            frame.setVisible(true);
-        });
     }
 }

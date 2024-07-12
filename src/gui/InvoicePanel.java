@@ -3,6 +3,7 @@ package gui;
 import services.InvoiceService;
 import services.CustomerService;
 import services.ItemService;
+import services.PaymentService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,14 +15,16 @@ public class InvoicePanel extends JPanel {
     private final InvoiceService invoiceService;
     private final CustomerService customerService;
     private final ItemService itemService;
+    private final PaymentService paymentService;
 
     private JTable itemTable;
     private DefaultTableModel tableModel;
 
-    public InvoicePanel(JFrame menuFrame, InvoiceService invoiceService, CustomerService customerService, ItemService itemService) {
+    public InvoicePanel(JFrame menuFrame, InvoiceService invoiceService, CustomerService customerService, ItemService itemService, PaymentService paymentService) {
         this.invoiceService = invoiceService;
         this.customerService = customerService;
         this.itemService = itemService;
+        this.paymentService = paymentService;
 
         initialize(menuFrame);
     }
@@ -66,7 +69,7 @@ public class InvoicePanel extends JPanel {
         loadInvoiceData();
 
         createButton.addActionListener(_ -> {
-            InvoiceDialog invoiceDialog = new InvoiceDialog(parentFrame, "Create Invoice", invoiceService, customerService, itemService);
+            InvoiceDialog invoiceDialog = new InvoiceDialog(parentFrame, "Create Invoice", invoiceService, customerService, itemService, paymentService);
             invoiceDialog.setVisible(true);
             loadInvoiceData();
         });
@@ -123,14 +126,5 @@ public class InvoicePanel extends JPanel {
             }
             table.setRowHeight(row, rowHeight);
         }
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Invoice Panel");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new InvoicePanel(frame, new InvoiceService(), new CustomerService(), new ItemService()));
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
     }
 }

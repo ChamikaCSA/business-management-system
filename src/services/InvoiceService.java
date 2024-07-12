@@ -11,15 +11,24 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 public class InvoiceService {
+    private final CustomerService customerService;
+    private final ItemService itemService;
+
     private final Map<String, Invoice> invoiceRegistry = new TreeMap<>();
 
-    public InvoiceService() {
+    public InvoiceService(CustomerService customerService, ItemService itemService) {
+        this.customerService = customerService;
+        this.itemService = itemService;
+
         updateRegistry();
     }
 
     public void updateRegistry() {
         invoiceRegistry.clear();
+        Map<String, Customer> customerRegistry = customerService.getCustomerRegistry();
+        Map<String, Item> itemRegistry = itemService.getItemRegistry();
         String sql = "SELECT * FROM Invoices";
+
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -30,11 +39,10 @@ public class InvoiceService {
                 invoice.setTotalAmount(rs.getDouble("totalAmount"));
 
                 String customerId = rs.getString("customerId");
-                Customer customer = new CustomerService().getCustomerById(customerId);
-                invoice.setCustomer(customer);
+                invoice.setCustomer(customerRegistry.get(customerId));
 
-                Map<Item, Integer> items = getInvoiceItems(invoice.getId());
-                invoice.setItemsMap(items);
+                Map<Item, Integer> itemsMap = getInvoiceItems(invoice.getId(), itemRegistry);
+                invoice.setItemsMap(itemsMap);
 
                 invoiceRegistry.put(invoice.getId(), invoice);
             }
@@ -159,7 +167,7 @@ public class InvoiceService {
             deleteStmt.setString(1, invoiceId);
             deleteStmt.executeUpdate();
 
-            Map<Item, Integer> items = getInvoiceItems(invoiceId);
+            Map<Item, Integer> items = getInvoiceItems(invoiceId, itemService.getItemRegistry());
             for (Map.Entry<Item, Integer> entry : items.entrySet()) {
                 Item item = entry.getKey();
                 int quantity = entry.getValue();
@@ -175,16 +183,16 @@ public class InvoiceService {
         return invoiceRegistry.get(invoiceId);
     }
 
-    private Map<Item, Integer> getInvoiceItems(String invoiceId) {
+    private static Map<Item, Integer> getInvoiceItems(String invoiceId, Map<String, Item> itemsRegistry) {
         Map<Item, Integer> items = new HashMap<>();
-        String sql = "SELECT * FROM InvoiceItems WHERE invoiceId = ?";
+        String sql = "SELECT itemId, quantity FROM InvoiceItems WHERE invoiceId = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, invoiceId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     String itemId = rs.getString("itemId");
-                    Item item = new ItemService().getItemById(itemId);
+                    Item item = itemsRegistry.get(itemId);
                     int quantity = rs.getInt("quantity");
                     items.put(item, quantity);
                 }
@@ -203,42 +211,6 @@ public class InvoiceService {
             }
         }
         return totalIncome;
-    }
-
-    public String generateMonthlySalesReport() {
-        StringBuilder report = new StringBuilder();
-        Map<String, Double> salesByMonth = new HashMap<>();
-
-        SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM yyyy");
-        for (Invoice invoice : invoiceRegistry.values()) {
-            String month = monthFormat.format(invoice.getDate());
-            salesByMonth.put(month, salesByMonth.getOrDefault(month, 0.0) + invoice.getTotalAmount());
-        }
-
-        for (Map.Entry<String, Double> entry : salesByMonth.entrySet()) {
-            report.append(entry.getKey()).append(": $").append(entry.getValue()).append("\n");
-        }
-        return report.toString();
-    }
-
-    public double forecastNextMonthSales() {
-        double totalSales = 0.0;
-        int monthsCounted = 0;
-
-        SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy-MM");
-        Map<String, Double> monthlySales = new HashMap<>();
-
-        for (Invoice invoice : invoiceRegistry.values()) {
-            String month = monthFormat.format(invoice.getDate());
-            monthlySales.put(month, monthlySales.getOrDefault(month, 0.0) + invoice.getTotalAmount());
-        }
-
-        for (Double sales : monthlySales.values()) {
-            totalSales += sales;
-            monthsCounted++;
-        }
-
-        return monthsCounted > 0 ? totalSales / monthsCounted : 0.0;
     }
 
     public String generateIncomeAndSalesAnalysis() {
@@ -261,5 +233,20 @@ public class InvoiceService {
 
         double averageSale = totalSales > 0 ? totalIncome / totalSales : 0.0;
         return STR."Total Income: $\{totalIncome}\nTotal Sales: \{totalSales}\nAverage Sale: $\{averageSale}\nHighest Sale: $\{highestSale}\nLowest Sale: $\{lowestSale}";
+    }
+
+    public List<Double> getMonthlySalesData() {
+        SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy-MM");
+        Map<String, Double> monthlySales = new TreeMap<>();
+        String currentMonth = monthFormat.format(new Date());
+
+        for (Invoice invoice : invoiceRegistry.values()) {
+            String month = monthFormat.format(invoice.getDate());
+            if (!month.equals(currentMonth)) {
+                monthlySales.put(month, monthlySales.getOrDefault(month, 0.0) + invoice.getTotalAmount());
+            }
+        }
+
+        return new ArrayList<>(monthlySales.values());
     }
 }

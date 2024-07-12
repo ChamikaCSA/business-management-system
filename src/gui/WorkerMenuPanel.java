@@ -17,6 +17,7 @@ public class WorkerMenuPanel extends JPanel {
     private final GoodsReceiveNoteService goodsReceiveNoteService;
     private final InvoiceService invoiceService;
     private final ItemService itemService;
+    private final PaymentService paymentService;
     private final ScaleLicenseService scaleLicenseService;
     private final SupplierService supplierService;
 
@@ -25,13 +26,14 @@ public class WorkerMenuPanel extends JPanel {
     private static final Logger LOGGER = Logger.getLogger(AdminMenuPanel.class.getName());
 
     public WorkerMenuPanel(JFrame menuFrame, CustomerService customerService, GoodsReceiveNoteService goodsReceiveNoteService,
-                          InvoiceService invoiceService, ItemService itemService, ScaleLicenseService scaleLicenseService,
+                          InvoiceService invoiceService, ItemService itemService, PaymentService paymentService, ScaleLicenseService scaleLicenseService,
                           SupplierService supplierService) {
         this.menuFrame = menuFrame;
         this.customerService = customerService;
         this.goodsReceiveNoteService = goodsReceiveNoteService;
         this.invoiceService = invoiceService;
         this.itemService = itemService;
+        this.paymentService = paymentService;
         this.scaleLicenseService = scaleLicenseService;
         this.supplierService = supplierService;
 
@@ -67,14 +69,14 @@ public class WorkerMenuPanel extends JPanel {
         mainPanel.add(inventoryLabel, createGBC(0));
 
         addButton(mainPanel, gbc, 0, 1, "Manage Items", "icon.png", "view and manage items in the inventory.", this::viewItems);
-        addButton(mainPanel, gbc, 1, 1, "Create Goods Receive Notes", "icon.png", "create a new goods receive note for a supplier.", this::createGoodsReceiveNote);
+        addButton(mainPanel, gbc, 1, 1, "Create Goods Receive Note", "icon.png", "create a new goods receive note for a supplier.", this::createGoodsReceiveNote);
 
         JLabel FinanceLabel = new JLabel("Finance Management");
         FinanceLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         mainPanel.add(FinanceLabel, createGBC(2));
 
         addButton(mainPanel, gbc, 0, 3, "Create Invoice", "icon.png", "create a new invoice for a customer.", this::createInvoice);
-        addButton(mainPanel, gbc, 1, 3, "Manage Payments", "icon.png", "manage payments for an invoice.", this::managePayments);
+        addButton(mainPanel, gbc, 1, 3, "Manage Payments", "icon.png", "view and manage payments.", this::managePayments);
         addButton(mainPanel, gbc, 2, 3, "View Income Details", "icon.png", "view income details within a specified date range.", this::viewIncomeDetails);
 
         JLabel SupplierCustomerLabel = new JLabel("Supplier and Customer Management");
@@ -146,64 +148,13 @@ public class WorkerMenuPanel extends JPanel {
     }
 
     private void createInvoice() {
-        InvoiceDialog invoiceDialog = new InvoiceDialog(menuFrame, "Create Invoice", invoiceService, customerService, itemService);
+        InvoiceDialog invoiceDialog = new InvoiceDialog(menuFrame, "Create Invoice", invoiceService, customerService, itemService, paymentService);
         invoiceDialog.setVisible(true);
     }
 
     public void managePayments() {
-        JComboBox<Invoice> invoiceComboBox = new JComboBox<>(invoiceService.getInvoiceRegistry().values().toArray(new Invoice[0]));
-        JTextField paymentAmountField = new JTextField();
-
-        while (true) {
-            JPanel panel = new JPanel(new GridLayout(0, 1));
-            panel.add(new JLabel("Select Invoice:"));
-            panel.add(invoiceComboBox);
-            panel.add(new JLabel("Payment Amount:"));
-            panel.add(paymentAmountField);
-
-            int result = JOptionPane.showConfirmDialog(null, panel, "Manage Payments",
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-            if (result != JOptionPane.OK_OPTION) {
-                return;
-            }
-
-            Invoice selectedInvoice = (Invoice) invoiceComboBox.getSelectedItem();
-            String paymentAmountStr = paymentAmountField.getText().trim();
-
-            if (selectedInvoice == null) {
-                JOptionPane.showMessageDialog(null, "No invoice selected.", "Error", JOptionPane.ERROR_MESSAGE);
-                continue;
-            }
-
-            if (paymentAmountStr.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Payment amount cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
-                continue;
-            }
-
-            try {
-                double paymentAmount = Double.parseDouble(paymentAmountStr);
-
-                if (paymentAmount <= 0) {
-                    JOptionPane.showMessageDialog(null, "Payment amount must be greater than zero.", "Error", JOptionPane.ERROR_MESSAGE);
-                    continue;
-                }
-
-                if (paymentAmount > selectedInvoice.getTotalAmount()) {
-                    JOptionPane.showMessageDialog(null, "Payment amount cannot exceed total amount.", "Error", JOptionPane.ERROR_MESSAGE);
-                    continue;
-                }
-
-                double remainingAmount = selectedInvoice.getTotalAmount() - paymentAmount;
-                selectedInvoice.setTotalAmount(remainingAmount);
-                invoiceService.updateInvoice(selectedInvoice);
-
-                JOptionPane.showMessageDialog(null, STR."Payment recorded successfully for invoice: \{selectedInvoice.getId()}", "Success", JOptionPane.INFORMATION_MESSAGE);
-                return;
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Invalid input for payment amount. Please enter a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+        JTabbedPane tabbedPane = AppGUI.getTabbedPane();
+        tabbedPane.setSelectedIndex(tabbedPane.indexOfTab("Payments"));
     }
 
     private void viewIncomeDetails() {
@@ -369,10 +320,10 @@ public class WorkerMenuPanel extends JPanel {
 
             if ("Customer".equals(recipientType)) {
                 Customer selectedCustomer = (Customer) customerComboBox.getSelectedItem();
-                EmailSender.sendEmail(selectedCustomer.getEmail(), emailSubject, emailContent);
+                EmailSender.sendEmail(selectedCustomer.getEmail(), emailSubject, emailContent, getParent());
             } else if ("Supplier".equals(recipientType)) {
                 Supplier selectedSupplier = (Supplier) supplierComboBox.getSelectedItem();
-                EmailSender.sendEmail(selectedSupplier.getEmail(), emailSubject, emailContent);
+                EmailSender.sendEmail(selectedSupplier.getEmail(), emailSubject, emailContent, getParent());
             }
         }
     }
@@ -381,15 +332,5 @@ public class WorkerMenuPanel extends JPanel {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panel.add(new JLabel(labelText));
         return panel;
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Worker Menu");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 800);
-        frame.setLocationRelativeTo(null);
-        frame.add(new WorkerMenuPanel(frame, new CustomerService(), new GoodsReceiveNoteService(),
-                new InvoiceService(), new ItemService(), new ScaleLicenseService(), new SupplierService()));
-        frame.setVisible(true);
     }
 }

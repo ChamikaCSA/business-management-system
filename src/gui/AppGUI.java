@@ -2,6 +2,7 @@ package gui;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import services.*;
+import utils.Validation;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -12,32 +13,32 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 public class AppGUI extends JFrame {
+    private static final Logger LOGGER = Logger.getLogger(AppGUI.class.getName());
+
+    private static JTabbedPane tabbedPane;
     private final CustomerService customerService;
     private final GoodsReceiveNoteService goodsReceiveNoteService;
     private final InvoiceService invoiceService;
     private final ItemService itemService;
+    private final PaymentService paymentService;
     private final ScaleLicenseService scaleLicenseService;
     private final SupplierService supplierService;
     private final UserService userService;
-
-    private static final Logger LOGGER = Logger.getLogger(AppGUI.class.getName());
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[A-Za-z]{2,}$");
 
     private JTextField emailField;
     private JPasswordField passwordField;
     private JToggleButton showPasswordToggle;
     private JProgressBar progressBar;
     private JLabel statusLabel;
-    private static JTabbedPane tabbedPane;
 
     public AppGUI() {
         customerService = new CustomerService();
         goodsReceiveNoteService = new GoodsReceiveNoteService();
-        invoiceService = new InvoiceService();
         itemService = new ItemService();
+        invoiceService = new InvoiceService(customerService, itemService);
+        paymentService = new PaymentService(invoiceService);
         scaleLicenseService = new ScaleLicenseService();
         supplierService = new SupplierService();
         userService = new UserService();
@@ -45,11 +46,19 @@ public class AppGUI extends JFrame {
         initialize();
     }
 
+    public static JTabbedPane getTabbedPane() {
+        return tabbedPane;
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(AppGUI::new);
+    }
+
     private void initialize() {
         try {
             UIManager.setLookAndFeel(new FlatMacLightLaf());
         } catch (Exception e) {
-            LOGGER.warning("Failed to apply FlatLaf Look and Feel: " + e.getMessage());
+            LOGGER.warning(STR."Failed to apply FlatLaf Look and Feel: \{e.getMessage()}");
         }
 
         setTitle("Business Management System");
@@ -154,8 +163,7 @@ public class AppGUI extends JFrame {
         gbc.gridy = 7;
         loginPanel.add(passwordPanel, gbc);
 
-
-        JPanel buttonPanel = new JPanel(new BorderLayout(10 , 10));
+        JPanel buttonPanel = new JPanel(new BorderLayout(10, 10));
         buttonPanel.setBackground(new Color(245, 245, 245));
         buttonPanel.setBorder(new EmptyBorder(20, 0, 0, 0));
         buttonPanel.add(loginButton, BorderLayout.CENTER);
@@ -184,7 +192,7 @@ public class AppGUI extends JFrame {
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
                 emailField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
-                if (!emailField.getText().isEmpty() && isInvalidEmail(emailField.getText().trim())) {
+                if (!emailField.getText().isEmpty() && !Validation.isValidEmail(emailField.getText().trim())) {
                     setStatus("Invalid email format.", Color.RED);
                 }
             }
@@ -254,45 +262,57 @@ public class AppGUI extends JFrame {
     }
 
     private void handleLogin() {
+        SwingWorker<Boolean, Void> worker = new SwingWorker<>() {
+            private String userType;
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                String email = emailField.getText().trim();
+                String password = new String(passwordField.getPassword());
+
+                if (email.isEmpty() || password.isEmpty()) {
+                    setStatus("Please enter your email and password.", Color.RED);
+                    return false;
+                } else if (!Validation.isValidEmail(email)) {
+                    setStatus("Invalid email format.", Color.RED);
+                    return false;
+                }
+
+                try {
+                    userType = userService.authenticateUser(email, password);
+                    if (userType == null) {
+                        setStatus("Invalid email or password.", Color.RED);
+                        return false;
+                    } else {
+                        setStatus("Logging in...", Color.BLACK);
+                        return true;
+                    }
+                } catch (Exception ex) {
+                    LOGGER.log(Level.SEVERE, "An error occurred during login", ex);
+                    setStatus(STR."An error occurred: \{ex.getMessage()}", Color.RED);
+                    return false;
+                }
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    boolean loginSuccess = get();
+                    if (loginSuccess) {
+                        setStatus("Login successful.", Color.GREEN);
+                        openMenu(userType);
+                    }
+                } catch (Exception ex) {
+                    setStatus(STR."An error occurred: \{ex.getMessage()}", Color.RED);
+                } finally {
+                    progressBar.setVisible(false);
+                    progressBar.setIndeterminate(false);
+                }
+            }
+        };
+
         progressBar.setVisible(true);
         progressBar.setIndeterminate(true);
-
-        String email = emailField.getText().trim();
-        String password = new String(passwordField.getPassword());
-
-        if (email.isEmpty() && password.isEmpty()) {
-            setStatus("Email and password must not be empty.", Color.RED);
-            progressBar.setVisible(false);
-            progressBar.setIndeterminate(false);
-            return;
-        } else if (!email.isEmpty() && (isInvalidEmail(email))) {
-            setStatus("Invalid email format.", Color.RED);
-            progressBar.setVisible(false);
-            progressBar.setIndeterminate(false);
-            return;
-        } else if (email.isEmpty() || password.isEmpty()) {
-            setStatus("Email and password must not be empty.", Color.RED);
-            progressBar.setVisible(false);
-            progressBar.setIndeterminate(false);
-            return;
-        }
-
-        try {
-            String userType = userService.authenticateUser(email, password);
-
-            if (userType != null) {
-                setStatus("Login successful.", Color.GREEN);
-                openMenu(userType);
-            } else {
-                setStatus("Invalid username or password. Please try again.", Color.RED);
-            }
-        } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, "An error occurred during login", ex);
-            setStatus(STR."An error occurred: \{ex.getMessage()}", Color.RED);
-        } finally {
-            progressBar.setVisible(false);
-            progressBar.setIndeterminate(false);
-        }
+        worker.execute();
     }
 
     private void openMenu(String userType) {
@@ -304,15 +324,17 @@ public class AppGUI extends JFrame {
         tabbedPane = new JTabbedPane();
 
         tabbedPane.addTab("User Dashboard", new WorkerMenuPanel(menuFrame, customerService, goodsReceiveNoteService, invoiceService,
-                itemService, scaleLicenseService, supplierService));
+                itemService, paymentService, scaleLicenseService, supplierService));
         if (userType.equalsIgnoreCase("admin")) {
-            tabbedPane.addTab("Admin Dashboard", new AdminMenuPanel(menuFrame, invoiceService, itemService, userService));
+            tabbedPane.addTab("Admin Dashboard", new AdminMenuPanel(menuFrame, invoiceService, itemService));
+            tabbedPane.addTab("Reports and Analysis", new ReportAnalysisPanel(menuFrame, invoiceService, itemService));
         }
         tabbedPane.addTab("Items", new ItemPanel(menuFrame, itemService));
         tabbedPane.addTab("Suppliers", new SupplierPanel(menuFrame, supplierService));
         tabbedPane.addTab("Customers", new CustomerPanel(menuFrame, customerService));
-        tabbedPane.addTab("Invoices", new InvoicePanel(menuFrame, invoiceService, customerService, itemService));
+        tabbedPane.addTab("Invoices", new InvoicePanel(menuFrame, invoiceService, customerService, itemService, paymentService));
         tabbedPane.addTab("Goods Receive Notes", new GoodsReceiveNotePanel(menuFrame, goodsReceiveNoteService, itemService, supplierService));
+        tabbedPane.addTab("Payments", new PaymentPanel(menuFrame, paymentService, invoiceService));
         if (userType.equalsIgnoreCase("admin")) {
             tabbedPane.addTab("Users", new UserPanel(menuFrame, userService));
         }
@@ -338,10 +360,6 @@ public class AppGUI extends JFrame {
         setVisible(false);
     }
 
-    public static JTabbedPane getTabbedPane() {
-        return tabbedPane;
-    }
-
     private void setStatus(String message, Color color) {
         statusLabel.setForeground(color);
         statusLabel.setText(message);
@@ -349,13 +367,5 @@ public class AppGUI extends JFrame {
 
     private void clearStatus() {
         statusLabel.setText(" ");
-    }
-
-    private boolean isInvalidEmail(String email) {
-        return !EMAIL_PATTERN.matcher(email).matches();
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(AppGUI::new);
     }
 }

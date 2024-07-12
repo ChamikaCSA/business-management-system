@@ -70,7 +70,7 @@ public class ItemDialog extends JDialog {
         buttonPanel.add(saveButton);
 
         JButton cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(e -> dispose());
+        cancelButton.addActionListener(_ -> dispose());
         buttonPanel.add(cancelButton);
 
         gbc.gridx = 0;

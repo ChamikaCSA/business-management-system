@@ -118,6 +118,6 @@ public class GoodsReceiveNoteDialog extends JDialog {
         sb.append("Quantity: ").append(goodsReceiveNote.getQuantity()).append("\n");
         sb.append("Received Date: ").append(goodsReceiveNote.getReceivedDate()).append("\n");
 
-        EmailSender.sendEmail(goodsReceiveNote.getSupplier().getEmail(), "Goods Receive Note", sb.toString());
+        EmailSender.sendEmail(goodsReceiveNote.getSupplier().getEmail(), "Goods Receive Note", sb.toString(), getParent());
         }
 }
