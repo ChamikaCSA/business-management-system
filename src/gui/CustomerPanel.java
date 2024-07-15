@@ -6,12 +6,16 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class CustomerPanel extends JPanel {
     private final CustomerService customerService;
 
     private JTable customerTable;
     private DefaultTableModel tableModel;
+    private JTextField searchField;
+    private TableRowSorter<DefaultTableModel> sorter;
 
     public CustomerPanel(JFrame menuFrame, CustomerService customerService) {
         this.customerService = customerService;
@@ -22,14 +26,21 @@ public class CustomerPanel extends JPanel {
     private void initialize(JFrame parentFrame) {
         setLayout(new BorderLayout());
 
-        JToolBar toolBar = new JToolBar();
         JButton addButton = new JButton("Add");
         JButton editButton = new JButton("Edit");
         JButton deleteButton = new JButton("Delete");
+
+        JLabel searchLabel = new JLabel(" Search: ");
+        searchField = new JTextField(15);
+
+        JToolBar toolBar = new JToolBar();
         toolBar.add(addButton);
         toolBar.add(editButton);
         toolBar.add(deleteButton);
-        add(toolBar, BorderLayout.NORTH);
+
+        toolBar.addSeparator();
+        toolBar.add(searchLabel);
+        toolBar.add(searchField);
 
         customerTable = new JTable();
         tableModel = new DefaultTableModel(new Object[]{"ID", "Name", "Email"}, 0) {
@@ -48,10 +59,12 @@ public class CustomerPanel extends JPanel {
         customerTable.setFillsViewportHeight(true);
         customerTable.setRowHeight(30);
 
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
+        sorter = new TableRowSorter<>(tableModel);
         customerTable.setRowSorter(sorter);
 
         JScrollPane scrollPane = new JScrollPane(customerTable);
+
+        add(toolBar, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
 
         loadCustomers();
@@ -87,6 +100,18 @@ public class CustomerPanel extends JPanel {
             if (option == JOptionPane.YES_OPTION) {
                 customerService.deleteCustomer(customerId);
                 loadCustomers();
+            }
+        });
+
+        searchField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String searchText = searchField.getText();
+                if (searchText.trim().isEmpty()) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+                }
             }
         });
     }

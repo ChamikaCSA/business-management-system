@@ -39,6 +39,9 @@ public class Supplier {
 
     @Override
     public String toString() {
-        return STR."Supplier{id='\{id}\{'\''}, name='\{name}\{'\''}, email='\{email}\{'\''}\{'}'}";
+        if (id == null) {
+            return "New " + getClass().getSimpleName();
+        }
+        return id + " - " + name + " (" + email + ")";
     }
 }

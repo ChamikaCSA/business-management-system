@@ -232,7 +232,7 @@ public class InvoiceService {
         }
 
         double averageSale = totalSales > 0 ? totalIncome / totalSales : 0.0;
-        return STR."Total Income: $\{totalIncome}\nTotal Sales: \{totalSales}\nAverage Sale: $\{averageSale}\nHighest Sale: $\{highestSale}\nLowest Sale: $\{lowestSale}";
+        return "Total Income: $" + totalIncome + "\nTotal Sales: " + totalSales + "\nAverage Sale: $" + averageSale + "\nHighest Sale: $" + highestSale + "\nLowest Sale: $" + lowestSale;
     }
 
     public List<Double> getMonthlySalesData() {

@@ -2,11 +2,13 @@ package gui;
 
 import entities.Customer;
 import services.CustomerService;
-import utils.IDGenerator;
+import utils.Generator;
 import utils.Validation;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class CustomerDialog extends JDialog {
     private final CustomerService customerService;
@@ -33,41 +35,64 @@ public class CustomerDialog extends JDialog {
 
     private void initialize(JFrame parentFrame) {
         setLayout(new GridBagLayout());
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel nameLabel = new JLabel("Name:");
+        nameField = new JTextField(20);
+
+        JLabel emailLabel = new JLabel("Email:");
+        emailField = new JTextField(20);
+
+        JPanel buttonPanel = new JPanel();
+        JButton saveButton = new JButton("Save");
+        JButton cancelButton = new JButton("Cancel");
+
+        buttonPanel.add(saveButton);
+        buttonPanel.add(cancelButton);
+
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(nameLabel, gbc);
 
-        nameField = new JTextField(20);
-        gbc.gridx = 1;
+        gbc.gridx++;
         add(nameField, gbc);
 
-        JLabel emailLabel = new JLabel("Email:");
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy++;
         add(emailLabel, gbc);
 
-        emailField = new JTextField(20);
-        gbc.gridx = 1;
+        gbc.gridx++;
         add(emailField, gbc);
 
-        JPanel buttonPanel = new JPanel();
-
-        JButton saveButton = new JButton("Save");
-        saveButton.addActionListener(_ -> saveCustomer());
-        buttonPanel.add(saveButton);
-
-        JButton cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(_ -> dispose());
-        buttonPanel.add(cancelButton);
-
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy++;
         gbc.gridwidth = 2;
         add(buttonPanel, gbc);
+
+        nameField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER && !nameField.getText().isEmpty()) {
+                    emailField.requestFocus();
+                }
+            }
+        });
+
+        emailField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER && !emailField.getText().isEmpty()) {
+                    saveCustomer();
+                }
+            }
+        });
+
+        saveButton.addActionListener(_ -> saveCustomer());
+
+        cancelButton.addActionListener(_ -> dispose());
 
         pack();
         setLocationRelativeTo(parentFrame);
@@ -101,7 +126,7 @@ public class CustomerDialog extends JDialog {
 
         if (customerId == null) {
             int customerCount = customerService.getCustomerRegistry().size() + 1;
-            customerId = IDGenerator.generateId("CUST", customerCount);
+            customerId = Generator.generateId("CUST", customerCount);
             Customer customer = new Customer(customerId, name, email);
             customerService.insertCustomer(customer);
 

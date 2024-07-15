@@ -49,6 +49,9 @@ public class Item {
 
     @Override
     public String toString() {
-        return STR."Item{id='\{id}\{'\''}, name='\{name}\{'\''}, price=\{price}, quantity=\{quantity}\{'}'}";
+        if (id == null) {
+            return "New " + getClass().getSimpleName();
+        }
+        return id + " - " + name + " : $" + String.format("%.2f", price) + " (" + quantity + ")";
     }
 }

@@ -2,11 +2,13 @@ package gui;
 
 import entities.Supplier;
 import services.SupplierService;
-import utils.IDGenerator;
+import utils.Generator;
 import utils.Validation;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class SupplierDialog extends JDialog {
     private final SupplierService supplierService;
@@ -33,8 +35,10 @@ public class SupplierDialog extends JDialog {
 
     private void initialize(JFrame parentFrame) {
         setLayout(new GridBagLayout());
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel nameLabel = new JLabel("Name:");
         gbc.gridx = 0;
@@ -45,6 +49,15 @@ public class SupplierDialog extends JDialog {
         gbc.gridx = 1;
         add(nameField, gbc);
 
+        nameField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER && !nameField.getText().isEmpty()) {
+                    emailField.requestFocus();
+                }
+            }
+        });
+
         JLabel emailLabel = new JLabel("Email:");
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -53,6 +66,15 @@ public class SupplierDialog extends JDialog {
         emailField = new JTextField(20);
         gbc.gridx = 1;
         add(emailField, gbc);
+
+        emailField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER && !emailField.getText().isEmpty()) {
+                    saveSupplier();
+                }
+            }
+        });
 
         JPanel buttonPanel = new JPanel();
 
@@ -85,23 +107,22 @@ public class SupplierDialog extends JDialog {
         String email = emailField.getText();
 
         if (name.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Name cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please enter a name", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (email.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Email cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please enter an email", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (!Validation.isValidEmail(email)) {
-            JOptionPane.showMessageDialog(this, "Invalid email", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Email is not valid", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (supplierId == null) {
-            int supplierCount = supplierService.getSupplierRegistry().size() + 1;
-            supplierId = IDGenerator.generateId("SUP", supplierCount);
+            supplierId = Generator.generateId("SUP", supplierService.getSupplierRegistry().size() + 1);
             Supplier supplier = new Supplier(supplierId, name, email);
             supplierService.insertSupplier(supplier);
         } else {

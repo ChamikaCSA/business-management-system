@@ -4,40 +4,43 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18dd1b98-15f8-4db4-8867-cf5df5a0459c" name="Changes" comment="Refactor and enhance GUI with refined functionality and UI improvements">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/jfreechart_1_0_19.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/jcommon-1.0.23.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/jfreechart-1.0.19.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/Payment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/PaymentDialog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/PaymentPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/ReportAnalysisPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/python/forecast.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/PaymentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/Forecast.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/untitled.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/javax_annotation.xml" beforeDir="false" />
+    <list default="true" id="18dd1b98-15f8-4db4-8867-cf5df5a0459c" name="Changes" comment="Fully implemented all the user functionalities and improved GUIs.">
+      <change afterPath="$PROJECT_DIR$/src/gui/ForgotPasswordPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/InvoiceDetailsDialog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BusinessManagementSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManagementSystem.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/GoodsReceiveNote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/GoodsReceiveNote.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Invoice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Payment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/ScaleLicense.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ScaleLicense.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Supplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Supplier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/AdminMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AdminMenuPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/AppGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AppGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/CustomerDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/CustomerDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/CustomerPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/CustomerPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/GoodsReceiveNoteDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/GoodsReceiveNoteDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/GoodsReceiveNotePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/GoodsReceiveNotePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/InvoiceDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/InvoiceDialog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/InvoicePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/InvoicePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/ItemDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/ItemDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/ItemPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/ItemPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/PaymentDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/PaymentDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/PaymentPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/PaymentPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/ReportAnalysisPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/ReportAnalysisPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/SupplierDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SupplierDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/SupplierPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SupplierPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/UserDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/UserDialog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/UserPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/UserPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/WorkerMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/WorkerMenuPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/GoodsReceiveNoteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/GoodsReceiveNoteService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/InvoiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/InvoiceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/EmailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Forecast.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Forecast.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/IDGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Generator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Validation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Validation.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +62,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ChamikaCSA&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ChamikaCSA/business-management-system.git&quot;,
+    &quot;accountId&quot;: &quot;29704064-f755-4507-a35d-271ff3e7bfc0&quot;
+  }
+}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
@@ -76,53 +91,55 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.AdminMenuPanel.executor": "Run",
-    "Application.App.executor": "Run",
-    "Application.AppGUI.executor": "Run",
-    "Application.CustomerPanel.executor": "Run",
-    "Application.GoodsReceiveNotePanel.executor": "Run",
-    "Application.InvoicePanel.executor": "Run",
-    "Application.ItemPanel.executor": "Run",
-    "Application.MainApp.executor": "Run",
-    "Application.PaymentDialog.executor": "Run",
-    "Application.PaymentPanel.executor": "Run",
-    "Application.ReportAnalysisPanel.executor": "Run",
-    "Application.ReportPanel.executor": "Run",
-    "Application.ScaleLicensePanel.executor": "Run",
-    "Application.UserPanel.executor": "Run",
-    "Application.WorkerMenuPanel.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Python.forecast.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "jdk.selected.JAVA_MODULE": "openjdk-22",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projects/BusinessManagementSystem/lib/jcommon-1.0.23.jar",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "trusted.hosts",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.AdminMenuPanel.executor&quot;: &quot;Run&quot;,
+    &quot;Application.App.executor&quot;: &quot;Run&quot;,
+    &quot;Application.AppGUI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CustomerPanel.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ForgotPasswordPanel.executor&quot;: &quot;Run&quot;,
+    &quot;Application.GoodsReceiveNotePanel.executor&quot;: &quot;Run&quot;,
+    &quot;Application.InvoiceDialog.executor&quot;: &quot;Run&quot;,
+    &quot;Application.InvoicePanel.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ItemPanel.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PaymentDialog.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PaymentPanel.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ReportAnalysisPanel.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ReportPanel.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ScaleLicensePanel.executor&quot;: &quot;Run&quot;,
+    &quot;Application.UserPanel.executor&quot;: &quot;Run&quot;,
+    &quot;Application.WorkerMenuPanel.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Python.forecast.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-22&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Projects/BusinessManagementSystem/lib/jcommon-1.0.23.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="gui" />
@@ -189,7 +206,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-22-openjdk-22-3183f394aec4-bad0321e" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
       </set>
     </attachedChunks>
   </component>
@@ -218,7 +236,14 @@
       <workItem from="1720619629369" duration="9179000" />
       <workItem from="1720671428121" duration="24867000" />
       <workItem from="1720715995309" duration="12125000" />
-      <workItem from="1720748481757" duration="18485000" />
+      <workItem from="1720748481757" duration="44122000" />
+      <workItem from="1720815233891" duration="1051000" />
+      <workItem from="1720816310131" duration="536000" />
+      <workItem from="1720817049176" duration="412000" />
+      <workItem from="1720817474956" duration="141000" />
+      <workItem from="1720817626870" duration="14749000" />
+      <workItem from="1720887037231" duration="55118000" />
+      <workItem from="1721001642180" duration="8438000" />
     </task>
     <task id="LOCAL-00001" summary="Implement comprehensive features for admin functionalities">
       <option name="closed" value="true" />
@@ -244,7 +269,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720613591816</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fully implemented all the user functionalities and improved GUIs.">
+      <option name="closed" value="true" />
+      <created>1720779454348</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1720779454348</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,7 +304,8 @@
     <MESSAGE value="Implement comprehensive features for admin functionalities" />
     <MESSAGE value="Add complete GUI functionality with authentication and role-based menu navigation&#10;&#10;- Implemented a Java Swing application (AppGUI) for a Business Management System&#10;- Added login authentication with email validation and password show/hide toggle&#10;- Integrated service layers (Customer, GoodsReceiveNote, Invoice, Item, ScaleLicense, Supplier, User)&#10;- Designed admin and worker menus with respective functionalities&#10;- Created report and task panels for comprehensive user interaction&#10;- Ensured error handling and progress indicators for user feedback" />
     <MESSAGE value="Refactor and enhance GUI with refined functionality and UI improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor and enhance GUI with refined functionality and UI improvements" />
+    <MESSAGE value="Fully implemented all the user functionalities and improved GUIs." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fully implemented all the user functionalities and improved GUIs." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

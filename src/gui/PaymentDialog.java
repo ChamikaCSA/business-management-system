@@ -2,11 +2,8 @@ package gui;
 
 import entities.Invoice;
 import entities.Payment;
-import services.CustomerService;
-import services.InvoiceService;
-import services.ItemService;
 import services.PaymentService;
-import utils.IDGenerator;
+import utils.Generator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,15 +28,17 @@ public class PaymentDialog extends JDialog {
 
     private void initialize(JFrame parentFrame) {
         setLayout(new GridBagLayout());
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel paymentMethodLabel = new JLabel("Payment Method:");
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(paymentMethodLabel, gbc);
 
-        paymentMethodComboBox = new JComboBox<>(new String[]{"Cash", "Credit Card", "Debit Card", "Cheque"});
+        paymentMethodComboBox = new JComboBox<>(new String[]{"Cash", "Credit Card", "Debit Card", "Bank Transfer", "Cheque"});
         gbc.gridx = 1;
         add(paymentMethodComboBox, gbc);
 
@@ -72,7 +71,7 @@ public class PaymentDialog extends JDialog {
         }
 
         int paymentCount = paymentService.getPaymentRegistry().size() + 1;
-        paymentId = IDGenerator.generateDatedId("PAY", paymentCount);
+        paymentId = Generator.generateDatedId("PAY", paymentCount);
         amount = invoice.getTotalAmount();
         paymentDate = new Date();
 

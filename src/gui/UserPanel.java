@@ -6,12 +6,17 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class UserPanel extends JPanel {
     private final UserService userService;
 
     private JTable userTable;
     private DefaultTableModel tableModel;
+    private JTextField searchField;
+    private TableRowSorter<DefaultTableModel> sorter;
+    private JComboBox<String> typeFilter;
 
     public UserPanel(JFrame menuFrame, UserService userService) {
         this.userService = userService;
@@ -22,14 +27,28 @@ public class UserPanel extends JPanel {
     private void initialize(JFrame parentFrame) {
         setLayout(new BorderLayout());
 
-        JToolBar toolBar = new JToolBar();
         JButton addButton = new JButton("Add");
         JButton editButton = new JButton("Edit");
         JButton deleteButton = new JButton("Delete");
+
+        JLabel searchLabel = new JLabel(" Search: ");
+        searchField = new JTextField(15);
+
+        JLabel typeLabel = new JLabel("Type: ");
+        typeFilter = new JComboBox<>(new String[]{"All", "Admin", "Worker"});
+
+        JToolBar toolBar = new JToolBar();
         toolBar.add(addButton);
         toolBar.add(editButton);
         toolBar.add(deleteButton);
-        add(toolBar, BorderLayout.NORTH);
+
+        toolBar.addSeparator();
+        toolBar.add(searchLabel);
+        toolBar.add(searchField);
+
+        toolBar.addSeparator();
+        toolBar.add(typeLabel);
+        toolBar.add(typeFilter);
 
         userTable = new JTable();
         tableModel = new DefaultTableModel(new Object[]{"ID", "Name", "Email", "Type"}, 0) {
@@ -47,10 +66,12 @@ public class UserPanel extends JPanel {
         userTable.setFillsViewportHeight(true);
         userTable.setRowHeight(30);
 
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
+        sorter = new TableRowSorter<>(tableModel);
         userTable.setRowSorter(sorter);
 
         JScrollPane scrollPane = new JScrollPane(userTable);
+
+        add(toolBar, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
 
         loadUsers();
@@ -84,6 +105,28 @@ public class UserPanel extends JPanel {
             if (option == JOptionPane.YES_OPTION) {
                 userService.deleteUser(userId);
                 loadUsers();
+            }
+        });
+
+        searchField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String searchText = searchField.getText();
+                if (searchText.trim().isEmpty()) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+                }
+            }
+        });
+
+        typeFilter.addActionListener(_ -> {
+            String selectedType = (String) typeFilter.getSelectedItem();
+            assert selectedType != null;
+            if (selectedType.equals("All")) {
+                sorter.setRowFilter(null);
+            } else {
+                sorter.setRowFilter(RowFilter.regexFilter(selectedType, 3));
             }
         });
     }

@@ -7,17 +7,11 @@ import utils.Validation;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AppGUI extends JFrame {
-    private static final Logger LOGGER = Logger.getLogger(AppGUI.class.getName());
-
-    private static JTabbedPane tabbedPane;
     private final CustomerService customerService;
     private final GoodsReceiveNoteService goodsReceiveNoteService;
     private final InvoiceService invoiceService;
@@ -27,11 +21,29 @@ public class AppGUI extends JFrame {
     private final SupplierService supplierService;
     private final UserService userService;
 
+    private static JTabbedPane tabbedPane;
+
+    private JPanel loginPanel;
+    private JProgressBar progressBar;
+    private JLabel statusLabel;
     private JTextField emailField;
     private JPasswordField passwordField;
     private JToggleButton showPasswordToggle;
-    private JProgressBar progressBar;
-    private JLabel statusLabel;
+    private JButton forgotPasswordButton;
+
+    private static final Logger LOGGER = Logger.getLogger(AppGUI.class.getName());
+
+    public static final String FONT_NAME = "Segoe UI";
+
+    public static final Color BACKGROUND_COLOR = new Color(245, 245, 245);
+    public static final Color PRIMARY_COLOR = new Color(0, 122, 255);
+    public static final Color PRIMARY_COLOR_HOVER = new Color(PRIMARY_COLOR.getRed(), PRIMARY_COLOR.getGreen(), PRIMARY_COLOR.getBlue(), 200);
+    public static final Color SECONDARY_COLOR = new Color(188, 60, 144);
+    public static final Color SECONDARY_COLOR_HOVER = new Color(SECONDARY_COLOR.getRed(), SECONDARY_COLOR.getGreen(), SECONDARY_COLOR.getBlue(), 200);
+    public static final Color TERTIARY_COLOR = new Color(255, 0, 122);
+    public static final Color TERTIARY_COLOR_HOVER = new Color(TERTIARY_COLOR.getRed(), TERTIARY_COLOR.getGreen(), TERTIARY_COLOR.getBlue(), 200);
+    public static final Color QUATERNARY_COLOR = new Color(122, 255, 0);
+    public static final Color QUATERNARY_COLOR_HOVER = new Color(QUATERNARY_COLOR.getRed(), QUATERNARY_COLOR.getGreen(), QUATERNARY_COLOR.getBlue(), 200);
 
     public AppGUI() {
         customerService = new CustomerService();
@@ -58,7 +70,7 @@ public class AppGUI extends JFrame {
         try {
             UIManager.setLookAndFeel(new FlatMacLightLaf());
         } catch (Exception e) {
-            LOGGER.warning(STR."Failed to apply FlatLaf Look and Feel: \{e.getMessage()}");
+            LOGGER.warning("Failed to apply FlatLaf Look and Feel: " + e.getMessage());
         }
 
         setTitle("Business Management System");
@@ -66,35 +78,42 @@ public class AppGUI extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JPanel loginPanel = new JPanel(new GridBagLayout());
-        loginPanel.setBackground(new Color(245, 245, 245));
+        loginPanel = new JPanel(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel titleLabel = new JLabel("Welcome to Business Management System");
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        titleLabel.setFont(new Font(FONT_NAME, Font.BOLD, 24));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         JLabel subtitleLabel = new JLabel("Please login to continue");
-        subtitleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        subtitleLabel.setFont(new Font(FONT_NAME, Font.PLAIN, 18));
         subtitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JLabel emailLabel = new JLabel("Email");
-        emailLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        progressBar = new JProgressBar();
+        progressBar.setVisible(false);
+        progressBar.setIndeterminate(false);
 
-        JLabel passwordLabel = new JLabel("Password");
-        passwordLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        statusLabel = new JLabel(" ");
+        statusLabel.setFont(new Font(FONT_NAME, Font.BOLD, 14));
+        statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JLabel emailLabel = new JLabel("Email");
+        emailLabel.setFont(new Font(FONT_NAME, Font.BOLD, 18));
 
         emailField = new JTextField(20);
-        emailField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        emailField.setFont(new Font(FONT_NAME, Font.PLAIN, 18));
         emailField.setToolTipText("Enter your email address");
         emailField.setPreferredSize(new Dimension(300, 30));
         emailField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
 
+        JLabel passwordLabel = new JLabel("Password");
+        passwordLabel.setFont(new Font(FONT_NAME, Font.BOLD, 18));
+
         passwordField = new JPasswordField(20);
-        passwordField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        passwordField.setFont(new Font(FONT_NAME, Font.PLAIN, 18));
         passwordField.setToolTipText("Enter your password");
         passwordField.setPreferredSize(new Dimension(300, 30));
         passwordField.setBorder(BorderFactory.createEmptyBorder());
@@ -118,66 +137,73 @@ public class AppGUI extends JFrame {
         passwordPanel.add(passwordField, BorderLayout.CENTER);
         passwordPanel.add(showPasswordToggle, BorderLayout.EAST);
 
-        JButton loginButton = new JButton("Login");
-        JButton clearButton = new JButton("Clear");
+        forgotPasswordButton = new JButton("Forgot Password?");
+        forgotPasswordButton.setFont(new Font(FONT_NAME, Font.PLAIN, 14));
+        forgotPasswordButton.setForeground(PRIMARY_COLOR);
+        forgotPasswordButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        forgotPasswordButton.setFocusPainted(false);
+        forgotPasswordButton.setBorder(BorderFactory.createEmptyBorder());
+        forgotPasswordButton.setContentAreaFilled(false);
+        forgotPasswordButton.setHorizontalAlignment(SwingConstants.RIGHT);
 
-        loginButton.setBackground(new Color(34, 140, 220));
-        loginButton.setForeground(new Color(245, 245, 245));
-        loginButton.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        JPanel forgotPasswordPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        forgotPasswordPanel.setBackground(BACKGROUND_COLOR);
+        forgotPasswordPanel.add(forgotPasswordButton);
+
+        JButton loginButton = new JButton("Login");
+        loginButton.setFont(new Font(FONT_NAME, Font.BOLD, 18));
+        loginButton.setBackground(PRIMARY_COLOR);
+        loginButton.setForeground(BACKGROUND_COLOR);
         loginButton.setPreferredSize(new Dimension(150, 45));
         loginButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         loginButton.setFocusPainted(false);
 
-        clearButton.setBackground(new Color(181, 43, 121));
-        clearButton.setForeground(new Color(245, 245, 245));
-        clearButton.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        JButton clearButton = new JButton("Clear");
+        clearButton.setFont(new Font(FONT_NAME, Font.BOLD, 18));
+        clearButton.setBackground(SECONDARY_COLOR);
+        clearButton.setForeground(BACKGROUND_COLOR);
         clearButton.setPreferredSize(new Dimension(150, 45));
         clearButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         clearButton.setFocusPainted(false);
 
-        progressBar = new JProgressBar();
-        progressBar.setVisible(false);
-        progressBar.setIndeterminate(false);
-
-        statusLabel = new JLabel(" ");
-        statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        statusLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        JPanel buttonPanel = new JPanel(new BorderLayout(10, 10));
+        buttonPanel.setBackground(BACKGROUND_COLOR);
+        buttonPanel.setBorder(new EmptyBorder(20, 0, 0, 0));
+        buttonPanel.add(loginButton, BorderLayout.CENTER);
+        buttonPanel.add(clearButton, BorderLayout.EAST);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         loginPanel.add(titleLabel, gbc);
 
-        gbc.gridy = 1;
+        gbc.gridy++;
         loginPanel.add(subtitleLabel, gbc);
 
-        gbc.gridy = 4;
-        loginPanel.add(emailLabel, gbc);
-
-        gbc.gridy = 5;
-        loginPanel.add(emailField, gbc);
-
-        gbc.gridy = 6;
-        loginPanel.add(passwordLabel, gbc);
-
-        gbc.gridy = 7;
-        loginPanel.add(passwordPanel, gbc);
-
-        JPanel buttonPanel = new JPanel(new BorderLayout(10, 10));
-        buttonPanel.setBackground(new Color(245, 245, 245));
-        buttonPanel.setBorder(new EmptyBorder(20, 0, 0, 0));
-        buttonPanel.add(loginButton, BorderLayout.CENTER);
-        buttonPanel.add(clearButton, BorderLayout.EAST);
-
-        gbc.gridy = 8;
-        gbc.anchor = GridBagConstraints.CENTER;
-        loginPanel.add(buttonPanel, gbc);
-
-        gbc.gridy = 2;
+        gbc.gridy++;
         loginPanel.add(progressBar, gbc);
 
-        gbc.gridy = 3;
+        gbc.gridy++;
         loginPanel.add(statusLabel, gbc);
+
+        gbc.gridy++;
+        loginPanel.add(emailLabel, gbc);
+
+        gbc.gridy++;
+        loginPanel.add(emailField, gbc);
+
+        gbc.gridy++;
+        loginPanel.add(passwordLabel, gbc);
+
+        gbc.gridy++;
+        loginPanel.add(passwordPanel, gbc);
+
+        gbc.gridy++;
+        loginPanel.add(forgotPasswordPanel, gbc);
+
+        gbc.gridy++;
+        gbc.anchor = GridBagConstraints.CENTER;
+        loginPanel.add(buttonPanel, gbc);
 
         add(loginPanel, BorderLayout.CENTER);
 
@@ -185,7 +211,7 @@ public class AppGUI extends JFrame {
             @Override
             public void focusGained(FocusEvent e) {
                 super.focusGained(e);
-                emailField.setBorder(BorderFactory.createLineBorder(new Color(77, 163, 228), 1));
+                emailField.setBorder(BorderFactory.createLineBorder(PRIMARY_COLOR_HOVER, 1));
             }
 
             @Override
@@ -198,11 +224,27 @@ public class AppGUI extends JFrame {
             }
         });
 
+        emailField.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    clearStatus();
+                    String email = emailField.getText().trim();
+                    if (email.isEmpty()) {
+                        setStatus("Please enter your email.", Color.RED);
+                    } else if (!Validation.isValidEmail(email)) {
+                        setStatus("Invalid email format.", Color.RED);
+                    } else {
+                        passwordField.requestFocus();
+                    }
+                }
+            }
+        });
+
         passwordField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
                 super.focusGained(e);
-                passwordPanel.setBorder(BorderFactory.createLineBorder(new Color(77, 163, 228), 1));
+                passwordPanel.setBorder(BorderFactory.createLineBorder(PRIMARY_COLOR_HOVER, 1));
                 showPasswordToggle.setVisible(true);
             }
 
@@ -212,6 +254,14 @@ public class AppGUI extends JFrame {
                 passwordPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
                 if (new String(passwordField.getPassword()).isEmpty()) {
                     showPasswordToggle.setVisible(false);
+                }
+            }
+        });
+
+        passwordField.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    handleLogin();
                 }
             }
         });
@@ -226,46 +276,59 @@ public class AppGUI extends JFrame {
             }
         });
 
-        loginButton.addMouseListener(new MouseAdapter() {
+        forgotPasswordButton.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
-                loginButton.setBackground(new Color(77, 163, 228));
+                forgotPasswordButton.setForeground(PRIMARY_COLOR_HOVER);
             }
 
             public void mouseExited(MouseEvent evt) {
-                loginButton.setBackground(new Color(34, 140, 240));
+                forgotPasswordButton.setForeground(PRIMARY_COLOR);
             }
         });
 
-        loginButton.addActionListener(_ -> {
+        forgotPasswordButton.addActionListener(_ -> {
             clearStatus();
-            handleLogin();
+            String email = emailField.getText().trim();
+            openForgotPassword(email);
         });
+
+        loginButton.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
+                loginButton.setBackground(PRIMARY_COLOR_HOVER);
+            }
+
+            public void mouseExited(MouseEvent evt) {
+                loginButton.setBackground(PRIMARY_COLOR);
+            }
+        });
+
+        loginButton.addActionListener(_ -> handleLogin());
 
         clearButton.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
-                clearButton.setBackground(new Color(210, 53, 141));
-            }
+                clearButton.setBackground(SECONDARY_COLOR_HOVER);
+                }
 
             public void mouseExited(MouseEvent evt) {
-                clearButton.setBackground(new Color(181, 43, 121));
+                clearButton.setBackground(SECONDARY_COLOR);
             }
         });
 
         clearButton.addActionListener(_ -> {
+            clearStatus();
             emailField.setText("");
             passwordField.setText("");
-            clearStatus();
             emailField.requestFocus();
         });
 
         setVisible(true);
     }
 
-    private void handleLogin() {
+    public void handleLogin() {
         SwingWorker<Boolean, Void> worker = new SwingWorker<>() {
             private String userType;
             @Override
-            protected Boolean doInBackground() throws Exception {
+            protected Boolean doInBackground() {
                 String email = emailField.getText().trim();
                 String password = new String(passwordField.getPassword());
 
@@ -288,7 +351,7 @@ public class AppGUI extends JFrame {
                     }
                 } catch (Exception ex) {
                     LOGGER.log(Level.SEVERE, "An error occurred during login", ex);
-                    setStatus(STR."An error occurred: \{ex.getMessage()}", Color.RED);
+                    setStatus("An error occurred: " + ex.getMessage(), Color.RED);
                     return false;
                 }
             }
@@ -302,7 +365,7 @@ public class AppGUI extends JFrame {
                         openMenu(userType);
                     }
                 } catch (Exception ex) {
-                    setStatus(STR."An error occurred: \{ex.getMessage()}", Color.RED);
+                    setStatus("An error occurred: " + ex.getMessage(), Color.RED);
                 } finally {
                     progressBar.setVisible(false);
                     progressBar.setIndeterminate(false);
@@ -310,8 +373,10 @@ public class AppGUI extends JFrame {
             }
         };
 
+        clearStatus();
         progressBar.setVisible(true);
         progressBar.setIndeterminate(true);
+
         worker.execute();
     }
 
@@ -324,7 +389,7 @@ public class AppGUI extends JFrame {
         tabbedPane = new JTabbedPane();
 
         tabbedPane.addTab("User Dashboard", new WorkerMenuPanel(menuFrame, customerService, goodsReceiveNoteService, invoiceService,
-                itemService, paymentService, scaleLicenseService, supplierService));
+                itemService, paymentService, scaleLicenseService, supplierService, userService));
         if (userType.equalsIgnoreCase("admin")) {
             tabbedPane.addTab("Admin Dashboard", new AdminMenuPanel(menuFrame, invoiceService, itemService));
             tabbedPane.addTab("Reports and Analysis", new ReportAnalysisPanel(menuFrame, invoiceService, itemService));
@@ -332,12 +397,12 @@ public class AppGUI extends JFrame {
         tabbedPane.addTab("Items", new ItemPanel(menuFrame, itemService));
         tabbedPane.addTab("Suppliers", new SupplierPanel(menuFrame, supplierService));
         tabbedPane.addTab("Customers", new CustomerPanel(menuFrame, customerService));
-        tabbedPane.addTab("Invoices", new InvoicePanel(menuFrame, invoiceService, customerService, itemService, paymentService));
-        tabbedPane.addTab("Goods Receive Notes", new GoodsReceiveNotePanel(menuFrame, goodsReceiveNoteService, itemService, supplierService));
-        tabbedPane.addTab("Payments", new PaymentPanel(menuFrame, paymentService, invoiceService));
         if (userType.equalsIgnoreCase("admin")) {
             tabbedPane.addTab("Users", new UserPanel(menuFrame, userService));
         }
+        tabbedPane.addTab("Goods Receive Notes", new GoodsReceiveNotePanel(menuFrame, goodsReceiveNoteService, itemService, supplierService));
+        tabbedPane.addTab("Invoices", new InvoicePanel(menuFrame, invoiceService, customerService, itemService, paymentService));
+        tabbedPane.addTab("Payments", new PaymentPanel(menuFrame, paymentService, invoiceService));
 
         menuFrame.add(tabbedPane, BorderLayout.CENTER);
 
@@ -358,6 +423,17 @@ public class AppGUI extends JFrame {
 
         menuFrame.setVisible(true);
         setVisible(false);
+    }
+
+    private void openForgotPassword(String email) {
+        ForgotPasswordPanel forgotPasswordPanel = new ForgotPasswordPanel(loginPanel, userService, email);
+        add(forgotPasswordPanel, BorderLayout.CENTER);
+
+        forgotPasswordPanel.setVisible(true);
+        loginPanel.setVisible(false);
+
+        revalidate();
+        repaint();
     }
 
     private void setStatus(String message, Color color) {

@@ -61,6 +61,9 @@ public class User {
 
     @Override
     public String toString() {
-        return STR."User{id='\{id}\{'\''}, name='\{name}\{'\''}, email='\{email}\{'\''}, password='\{password}\{'\''}, type='\{type}\{'\''}\{'}'}";
+        if (id == null) {
+            return "New " + getClass().getSimpleName();
+        }
+        return id + " - " + name + " (" + email + ")";
     }
 }

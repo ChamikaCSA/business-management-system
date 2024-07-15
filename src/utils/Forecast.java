@@ -12,7 +12,7 @@ public class Forecast {
             String forecast = runPythonScript(salesData);
             return forecast;
         } catch (Exception e) {
-            throw new RuntimeException(STR."Error forecasting sales: \{e.getMessage()}");
+            throw new RuntimeException("Error forecasting sales: " + e.getMessage());
         }
     }
 
@@ -21,7 +21,7 @@ public class Forecast {
         Process process = processBuilder.start();
         int exitCode = process.waitFor();
         if (exitCode != 0) {
-            throw new RuntimeException(STR."Failed to install Python package \{packageName}");
+            throw new RuntimeException("Failed to install Python package " + packageName);
         }
     }
 
@@ -45,7 +45,7 @@ public class Forecast {
 
         int exitCode = process.waitFor();
         if (exitCode != 0) {
-            throw new RuntimeException(STR."Script execution failed with exit code \{exitCode}");
+            throw new RuntimeException("Script execution failed with exit code " + exitCode);
         }
 
         return result.toString();

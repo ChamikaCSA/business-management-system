@@ -42,6 +42,9 @@ public class ScaleLicense {
 
     @Override
     public String toString() {
-        return STR."ScaleLicense{id='\{id}\{'\''}, expirationDate=\{expirationDate}, scaleType='\{scaleType}\{'\''}\{'}'}";
+        if (id == null) {
+            return "New " + getClass().getSimpleName();
+        }
+        return id + " : " + scaleType + " (" + expirationDate + ")";
     }
 }

@@ -3,7 +3,7 @@ package utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class IDGenerator {
+public class Generator {
     public static String generateId(String prefix, int count) {
         return String.format("%s-%04d", prefix, count);
     }
@@ -14,7 +14,7 @@ public class IDGenerator {
         return String.format("%s-%s-%03d", prefix, datePart, count);
     }
 
-    public static String generateRandomPassword() {
+    public static String generatePassword() {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder password = new StringBuilder();
         for (int i = 0; i < 8; i++) {
@@ -22,5 +22,15 @@ public class IDGenerator {
             password.append(chars.charAt(index));
         }
         return password.toString();
+    }
+
+    public static String generateCode() {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder code = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            int index = (int) (Math.random() * chars.length());
+            code.append(chars.charAt(index));
+        }
+        return code.toString();
     }
 }

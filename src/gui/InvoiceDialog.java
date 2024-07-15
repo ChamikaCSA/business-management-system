@@ -8,11 +8,14 @@ import services.InvoiceService;
 import services.ItemService;
 import services.PaymentService;
 import utils.EmailSender;
-import utils.IDGenerator;
+import utils.Generator;
+import utils.Validation;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,9 +27,13 @@ public class InvoiceDialog extends JDialog {
     private final PaymentService paymentService;
 
     private JComboBox<Customer> customerComboBox;
+    private JTextField nameField;
+    private JTextField emailField;
     private JComboBox<Item> itemComboBox;
     private JTextField quantityField;
+
     private final Map<Item, Integer> items = new HashMap<>();
+    private final Customer newCustomerPlaceholder = new Customer();
 
     public InvoiceDialog(JFrame parentFrame, String title, InvoiceService invoiceService, CustomerService customerService, ItemService itemService, PaymentService paymentService) {
         super(parentFrame, title, true);
@@ -40,19 +47,32 @@ public class InvoiceDialog extends JDialog {
 
     private void initialize(JFrame parentFrame) {
         setLayout(new GridBagLayout());
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel customerLabel = new JLabel("Customer:");
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        add(customerLabel, gbc);
-
         customerComboBox = new JComboBox<>(customerService.getCustomerRegistry().values().toArray(new Customer[0]));
-        gbc.gridx = 1;
-        add(customerComboBox, gbc);
+        customerComboBox.insertItemAt(newCustomerPlaceholder, 0);
+        customerComboBox.setSelectedIndex(0);
 
-        JPanel itemsPanel = new JPanel();
+        JLabel nameLabel = new JLabel("Name:");
+        nameField = new JTextField(20);
+
+        JLabel emailLabel = new JLabel("Email:");
+        emailField = new JTextField(20);
+
+        Dimension placeholderSize = new Dimension(0, nameField.getPreferredSize().height);
+
+        JPanel placeholderPanel1 = new JPanel();
+        placeholderPanel1.setPreferredSize(placeholderSize);
+        placeholderPanel1.setVisible(false);
+
+        JPanel placeholderPanel2 = new JPanel();
+        placeholderPanel2.setPreferredSize(placeholderSize);
+        placeholderPanel2.setVisible(false);
+
         JTable itemsTable = new JTable();
         DefaultTableModel itemsTableModel = new DefaultTableModel(new Object[]{"ID", "Name", "Price", "Quantity"}, 0) {
             @Override
@@ -73,60 +93,140 @@ public class InvoiceDialog extends JDialog {
         itemsTable.setRowHeight(30);
 
         JScrollPane itemsScrollPane = new JScrollPane(itemsTable);
+        JPanel itemsPanel = new JPanel();
         itemsPanel.add(itemsScrollPane);
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 2;
-        add(itemsPanel, gbc);
-
         JLabel itemLabel = new JLabel("Item:");
-        gbc.gridy = 2;
-        gbc.gridwidth = 1;
-        add(itemLabel, gbc);
-
         itemComboBox = new JComboBox<>(itemService.getItemRegistry().values().toArray(new Item[0]));
-        gbc.gridx = 1;
-        add(itemComboBox, gbc);
+        itemComboBox.setSelectedIndex(-1);
 
         JLabel quantityLabel = new JLabel("Quantity:");
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        add(quantityLabel, gbc);
-
         quantityField = new JTextField(10);
-        gbc.gridx = 1;
-        add(quantityField, gbc);
-
-        JPanel itemButtonPanel = new JPanel();
 
         JButton addItemButton = new JButton("Add Item");
-        addItemButton.addActionListener(_ -> addItem(itemsTableModel));
-
+        addItemButton.setPreferredSize(new Dimension(120, 30));
         JButton removeItemButton = new JButton("Remove Item");
-        removeItemButton.addActionListener(_ -> removeItem(itemsTableModel, itemsTable));
+        removeItemButton.setPreferredSize(new Dimension(120, 30));
 
+        JPanel itemButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         itemButtonPanel.add(addItemButton);
         itemButtonPanel.add(removeItemButton);
 
+        JButton saveButton = new JButton("Save");
+        saveButton.setPreferredSize(new Dimension(120, 30));
+        JButton cancelButton = new JButton("Cancel");
+        cancelButton.setPreferredSize(new Dimension(120, 30));
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(saveButton);
+        buttonPanel.add(cancelButton);
+
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 0;
+        add(customerLabel, gbc);
+
+        gbc.gridx++;
+        add(customerComboBox, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        add(nameLabel, gbc);
+
+        gbc.gridx++;
+        add(nameField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        add(emailLabel, gbc);
+
+        gbc.gridx++;
+        add(emailField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        add(placeholderPanel1, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        add(placeholderPanel2, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy++;
+        add(itemsPanel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 1;
+        add(itemLabel, gbc);
+
+        gbc.gridx++;
+        add(itemComboBox, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        add(quantityLabel, gbc);
+
+        gbc.gridx++;
+        add(quantityField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
         gbc.gridwidth = 2;
         add(itemButtonPanel, gbc);
 
-        JPanel buttonPanel = new JPanel();
-
-        JButton saveButton = new JButton("Save");
-        saveButton.addActionListener(_ -> saveInvoice());
-        buttonPanel.add(saveButton);
-
-        JButton cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(_ -> dispose());
-        buttonPanel.add(cancelButton);
-
-        gbc.gridy = 5;
+        gbc.gridy++;
         gbc.gridwidth = 2;
         add(buttonPanel, gbc);
+
+        customerComboBox.addActionListener(_ -> {
+            if (customerComboBox.getSelectedIndex() != 0) {
+                nameLabel.setVisible(false);
+                nameField.setVisible(false);
+                emailLabel.setVisible(false);
+                emailField.setVisible(false);
+                placeholderPanel1.setVisible(true);
+                placeholderPanel2.setVisible(true);
+            } else {
+                nameLabel.setVisible(true);
+                nameField.setVisible(true);
+                emailLabel.setVisible(true);
+                emailField.setVisible(true);
+                placeholderPanel1.setVisible(false);
+                placeholderPanel2.setVisible(false);
+            }
+        });
+
+        nameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    emailField.requestFocus();
+                }
+            }
+        });
+
+        emailField.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    itemComboBox.requestFocus();
+                }
+            }
+        });
+
+        itemComboBox.addActionListener(_ -> quantityField.requestFocus());
+
+        quantityField.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER && !quantityField.getText().isEmpty()) {
+                    addItem(itemsTableModel);
+                }
+            }
+        });
+
+        addItemButton.addActionListener(_ -> addItem(itemsTableModel));
+        removeItemButton.addActionListener(_ -> removeItem(itemsTableModel, itemsTable));
+
+        saveButton.addActionListener(_ -> saveInvoice());
+        cancelButton.addActionListener(_ -> dispose());
 
         pack();
         setLocationRelativeTo(parentFrame);
@@ -185,7 +285,33 @@ public class InvoiceDialog extends JDialog {
     }
 
     private void saveInvoice() {
-        Customer customer = (Customer) customerComboBox.getSelectedItem();
+        Customer customer;
+
+        if (customerComboBox.getSelectedIndex() == 0) {
+            String name = nameField.getText().trim();
+            String email = emailField.getText().trim();
+
+            if (name.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter a name.", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (email.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter an email.", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (!Validation.isValidEmail(email)) {
+                JOptionPane.showMessageDialog(this, "Email is not valid.", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String customerId = Generator.generateId("CUST", customerService.getCustomerRegistry().size() + 1);
+            customer = new Customer(customerId, name, email);
+            customerService.insertCustomer(customer);
+        } else {
+            customer = (Customer) customerComboBox.getSelectedItem();
+        }
 
         if (customer == null) {
             JOptionPane.showMessageDialog(this, "Please select a customer.", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -198,7 +324,7 @@ public class InvoiceDialog extends JDialog {
         }
 
         int invoiceCount = invoiceService.getInvoiceRegistry().size() + 1;
-        String invoiceId = IDGenerator.generateDatedId("INV", invoiceCount);
+        String invoiceId = Generator.generateDatedId("INV", invoiceCount);
         Date date = new Date();
         double totalAmount = calculateTotalAmount(items);
 

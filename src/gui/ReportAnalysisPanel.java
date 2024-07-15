@@ -13,12 +13,11 @@ import services.InvoiceService;
 import services.ItemService;
 import utils.Forecast;
 
+import static gui.AppGUI.*;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReportAnalysisPanel extends JPanel {
@@ -42,7 +41,6 @@ public class ReportAnalysisPanel extends JPanel {
         add(titleLabel, BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBackground(new Color(245, 245, 245));
 
         JPanel leftPanel = new JPanel(new GridBagLayout());
 
@@ -109,22 +107,22 @@ public class ReportAnalysisPanel extends JPanel {
                 false
         );
 
-        chart.setBackgroundPaint(new Color(245, 245, 245));
+        chart.setBackgroundPaint(BACKGROUND_COLOR);
 
         XYPlot plot = chart.getXYPlot();
-        plot.setBackgroundPaint(new Color(245, 245, 245));
+        plot.setBackgroundPaint(BACKGROUND_COLOR);
         plot.setDomainGridlinePaint(Color.GRAY);
         plot.setRangeGridlinePaint(Color.GRAY);
         plot.setDomainPannable(true);
         plot.setRangePannable(true);
 
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesPaint(0, new Color(34, 140, 240));
+        renderer.setSeriesPaint(0, PRIMARY_COLOR);
         renderer.setSeriesShapesVisible(0, true);
         renderer.setSeriesLinesVisible(0, true);
         renderer.setSeriesToolTipGenerator(0, new StandardXYToolTipGenerator());
 
-        renderer.setSeriesPaint(1, new Color(181, 43, 121));
+        renderer.setSeriesPaint(1, SECONDARY_COLOR);
         renderer.setSeriesShapesVisible(1, true);
         renderer.setSeriesLinesVisible(1, true);
         renderer.setSeriesToolTipGenerator(1, new StandardXYToolTipGenerator());
@@ -174,7 +172,7 @@ public class ReportAnalysisPanel extends JPanel {
             String report = itemService.generateStockLevelReport();
             reportArea.setText(report);
         } catch (Exception e) {
-            reportArea.setText(STR."Error generating report: \{e.getMessage()}");
+            reportArea.setText("Error generating report: " + e.getMessage());
         }
 
         JScrollPane scrollPane = new JScrollPane(reportArea);
@@ -197,7 +195,7 @@ public class ReportAnalysisPanel extends JPanel {
             String analysis = invoiceService.generateIncomeAndSalesAnalysis();
             analysisArea.setText(analysis);
         } catch (Exception e) {
-            analysisArea.setText(STR."Error generating analysis: \{e.getMessage()}");
+            analysisArea.setText("Error generating analysis: " + e.getMessage());
         }
 
         JScrollPane scrollPane = new JScrollPane(analysisArea);

@@ -1,12 +1,17 @@
 package gui;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import services.CustomerService;
 import services.InvoiceService;
 import services.ItemService;
+
+import static gui.AppGUI.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,19 +36,19 @@ public class AdminMenuPanel extends JPanel {
         try {
             UIManager.setLookAndFeel(new FlatMacLightLaf());
         } catch (Exception e) {
-            LOGGER.warning(STR."Failed to apply FlatLaf Look and Feel: \{e.getMessage()}");
+            LOGGER.warning("Failed to apply FlatLaf Look and Feel: " + e.getMessage());
         }
 
         setLayout(new BorderLayout(10, 10));
         setBorder(new EmptyBorder(10, 10, 10, 10));
 
         JLabel titleLabel = new JLabel("Admin Dashboard");
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        titleLabel.setFont(new Font(FONT_NAME, Font.BOLD, 24));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(titleLabel, BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBackground(new Color(245, 245, 245));
+        mainPanel.setBackground(BACKGROUND_COLOR);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -52,7 +57,7 @@ public class AdminMenuPanel extends JPanel {
         gbc.ipady = 20;
 
         JLabel reportsLabel = new JLabel("Reports and Analysis");
-        reportsLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        reportsLabel.setFont(new Font(FONT_NAME, Font.BOLD, 18));
         mainPanel.add(reportsLabel, createGBC(0));
 
         addButton(mainPanel, gbc, 0, 1, "Stock Report", "icon.png", "generate stock report.", this::viewReport);
@@ -60,7 +65,7 @@ public class AdminMenuPanel extends JPanel {
         addButton(mainPanel, gbc, 2, 1, "Income and Sales Analysis", "icon.png", "generate income and sales analysis report.", this::incomeAndSalesAnalysis);
 
         JLabel userManagementLabel = new JLabel("User Management");
-        userManagementLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        userManagementLabel.setFont(new Font(FONT_NAME, Font.BOLD, 18));
         mainPanel.add(userManagementLabel, createGBC(2));
 
         addButton(mainPanel, gbc, 0, 3, "View Users", "icon.png", "view and manage users.", this::viewUsers);
@@ -73,24 +78,24 @@ public class AdminMenuPanel extends JPanel {
         gbc.gridy = y;
 
         JButton button = new JButton(text);
-        button.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-        button.setIcon(new ImageIcon(STR."/icons/\{iconPath}"));
-        button.setToolTipText(STR."Click to \{toolTip}");
+        button.setFont(new Font(FONT_NAME, Font.PLAIN, 18));
+        button.setIcon(new ImageIcon("/icons/" + iconPath));
+        button.setToolTipText("Click to " + toolTip);
         button.addActionListener(_ -> action.run());
         button.setPreferredSize(new Dimension(240, 40));
 
-        button.setBackground(new Color(34, 140, 240));
-        button.setForeground(new Color(245, 245, 245));
+        button.setBackground(SECONDARY_COLOR);
+        button.setForeground(BACKGROUND_COLOR);
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         button.setFocusPainted(false);
 
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setBackground(new Color(77, 163, 228));
+        button.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
+                button.setBackground(SECONDARY_COLOR_HOVER);
             }
 
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBackground(new Color(34, 140, 240));
+            public void mouseExited(MouseEvent evt) {
+                button.setBackground(SECONDARY_COLOR);
             }
         });
 
@@ -114,8 +119,8 @@ public class AdminMenuPanel extends JPanel {
             String report = itemService.generateStockLevelReport();
             JOptionPane.showMessageDialog(this, report, "Stock Report", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, STR."Error generating stock report: \{e.getMessage()}", "Warning", JOptionPane.WARNING_MESSAGE);
-            LOGGER.severe(STR."Error generating stock report: \{e.getMessage()}");
+            JOptionPane.showMessageDialog(this, "Error generating stock report: " + e.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+            LOGGER.severe("Error generating stock report: " + e.getMessage());
         }
     }
 
@@ -128,10 +133,10 @@ public class AdminMenuPanel extends JPanel {
 
             installPythonPackage("statsmodels");
             String forecast = runPythonScript(salesData);
-            JOptionPane.showMessageDialog(this, STR."Next month's sales forecast is: $\{forecast}", "Sales Forecast", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Next month's sales forecast is: $" + forecast, "Sales Forecast", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, STR."Error forecasting sales: \{e.getMessage()}", "Warning", JOptionPane.WARNING_MESSAGE);
-            LOGGER.severe(STR."Error forecasting sales: \{e.getMessage()}");
+            JOptionPane.showMessageDialog(this, "Error forecasting sales: " + e.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+            LOGGER.severe("Error forecasting sales: " + e.getMessage());
         }
     }
 
@@ -140,7 +145,7 @@ public class AdminMenuPanel extends JPanel {
         Process process = processBuilder.start();
         int exitCode = process.waitFor();
         if (exitCode != 0) {
-            throw new RuntimeException(STR."Failed to install Python package \{packageName}");
+            throw new RuntimeException("Failed to install Python package " + packageName);
         }
     }
 
@@ -164,7 +169,7 @@ public class AdminMenuPanel extends JPanel {
 
         int exitCode = process.waitFor();
         if (exitCode != 0) {
-            throw new RuntimeException(STR."Script execution failed with exit code \{exitCode}");
+            throw new RuntimeException("Script execution failed with exit code " + exitCode);
         }
 
         return result.toString();
@@ -175,13 +180,21 @@ public class AdminMenuPanel extends JPanel {
             String report = invoiceService.generateIncomeAndSalesAnalysis();
             JOptionPane.showMessageDialog(this, report, "Income and Sales Analysis", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, STR."Error generating income and sales analysis: \{e.getMessage()}", "Warning", JOptionPane.WARNING_MESSAGE);
-            LOGGER.severe(STR."Error generating income and sales analysis: \{e.getMessage()}");
+            JOptionPane.showMessageDialog(this, "Error generating income and sales analysis: " + e.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+            LOGGER.severe("Error generating income and sales analysis: " + e.getMessage());
         }
     }
 
     private void viewUsers() {
         JTabbedPane tabbedPane = AppGUI.getTabbedPane();
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab("Users"));
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("AdminMenuPanel");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1000, 800);
+        frame.add(new AdminMenuPanel(null, new InvoiceService(new CustomerService(), new ItemService()), new ItemService()));
+        frame.setVisible(true);
     }
 }

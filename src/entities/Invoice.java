@@ -62,6 +62,12 @@ public class Invoice {
 
     @Override
     public String toString() {
-        return STR."Invoice{id='\{id}\{'\''}, customer=\{customer}, itemsMap=\{itemsMap}, date=\{date}, totalAmount=\{totalAmount}\{'}'}";
+        return "Invoice{" +
+                "id='" + id + '\'' +
+                ", customer=" + customer +
+                ", itemsMap=" + itemsMap +
+                ", date=" + date +
+                ", totalAmount=" + totalAmount +
+                '}';
     }
 }

@@ -2,10 +2,12 @@ package gui;
 
 import entities.Item;
 import services.ItemService;
-import utils.IDGenerator;
+import utils.Generator;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ItemDialog extends JDialog {
     private final ItemService itemService;
@@ -33,8 +35,10 @@ public class ItemDialog extends JDialog {
 
     private void initialize(JFrame parentFrame) {
         setLayout(new GridBagLayout());
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel nameLabel = new JLabel("Name:");
         gbc.gridx = 0;
@@ -45,6 +49,15 @@ public class ItemDialog extends JDialog {
         gbc.gridx = 1;
         add(nameField, gbc);
 
+        nameField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER && !nameField.getText().isEmpty()) {
+                    priceField.requestFocus();
+                }
+            }
+        });
+
         JLabel priceLabel = new JLabel("Price:");
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -54,6 +67,15 @@ public class ItemDialog extends JDialog {
         gbc.gridx = 1;
         add(priceField, gbc);
 
+        priceField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER && !priceField.getText().isEmpty()) {
+                    quantityField.requestFocus();
+                }
+            }
+        });
+
         JLabel quantityLabel = new JLabel("Quantity:");
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -62,6 +84,15 @@ public class ItemDialog extends JDialog {
         quantityField = new JTextField(20);
         gbc.gridx = 1;
         add(quantityField, gbc);
+
+        quantityField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER && !quantityField.getText().isEmpty()) {
+                    saveItem();
+                }
+            }
+        });
 
         JPanel buttonPanel = new JPanel();
 
@@ -124,7 +155,7 @@ public class ItemDialog extends JDialog {
 
         if (itemId == null) {
             int itemCount = itemService.getItemRegistry().size() + 1;
-            itemId = IDGenerator.generateId("ITEM", itemCount);
+            itemId = Generator.generateId("ITEM", itemCount);
             Item item = new Item(itemId, name, price, quantity);
             itemService.insertItem(item);
         } else {

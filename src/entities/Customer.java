@@ -39,6 +39,9 @@ public class Customer {
 
     @Override
     public String toString() {
-        return STR."Customer{id='\{id}\{'\''}, name='\{name}\{'\''}, email='\{email}\{'\''}\{'}'}";
+        if (id == null) {
+            return "New " + getClass().getSimpleName();
+        }
+        return id + " - " + name + " (" + email + ")";
     }
 }

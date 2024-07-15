@@ -1,5 +1,6 @@
 package gui;
 
+import entities.Invoice;
 import services.InvoiceService;
 import services.CustomerService;
 import services.ItemService;
@@ -9,6 +10,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.Date;
 
 public class InvoicePanel extends JPanel {
@@ -17,8 +19,11 @@ public class InvoicePanel extends JPanel {
     private final ItemService itemService;
     private final PaymentService paymentService;
 
-    private JTable itemTable;
+    private JTable invoiceTable;
     private DefaultTableModel tableModel;
+    private JTextField searchField;
+    private TableRowSorter<DefaultTableModel> sorter;
+    private JComboBox<String> totalAmountFilter;
 
     public InvoicePanel(JFrame menuFrame, InvoiceService invoiceService, CustomerService customerService, ItemService itemService, PaymentService paymentService) {
         this.invoiceService = invoiceService;
@@ -32,14 +37,30 @@ public class InvoicePanel extends JPanel {
     private void initialize(JFrame parentFrame) {
         setLayout(new BorderLayout());
 
-        JToolBar toolBar = new JToolBar();
         JButton createButton = new JButton("Create");
+        JButton viewButton = new JButton("View");
         JButton deleteButton = new JButton("Delete");
-        toolBar.add(createButton);
-        toolBar.add(deleteButton);
-        add(toolBar, BorderLayout.NORTH);
 
-        itemTable = new JTable();
+        JLabel searchLabel = new JLabel(" Search: ");
+        searchField = new JTextField(15);
+
+        JLabel totalAmountLabel = new JLabel("Total Amount: ");
+        totalAmountFilter = new JComboBox<>(new String[]{"All", "Below $100", "$100 - $500", "$500 - $1000", "$1000 - $5000", "Above $5000"});
+
+        JToolBar toolBar = new JToolBar();
+        toolBar.add(createButton);
+        toolBar.add(viewButton);
+        toolBar.add(deleteButton);
+
+        toolBar.addSeparator();
+        toolBar.add(searchLabel);
+        toolBar.add(searchField);
+
+        toolBar.addSeparator();
+        toolBar.add(totalAmountLabel);
+        toolBar.add(totalAmountFilter);
+
+        invoiceTable = new JTable();
 
         tableModel = new DefaultTableModel(new Object[]{"ID", "Customer ID", "Item ID", "Quantity", "Total Amount", "Date"}, 0) {
             @Override
@@ -57,13 +78,15 @@ public class InvoicePanel extends JPanel {
                 };
             }
         };
-        itemTable.setModel(tableModel);
-        itemTable.setFillsViewportHeight(true);
+        invoiceTable.setModel(tableModel);
+        invoiceTable.setFillsViewportHeight(true);
 
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
-        itemTable.setRowSorter(sorter);
+        sorter = new TableRowSorter<>(tableModel);
+        invoiceTable.setRowSorter(sorter);
 
-        JScrollPane scrollPane = new JScrollPane(itemTable);
+        JScrollPane scrollPane = new JScrollPane(invoiceTable);
+
+        add(toolBar, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
 
         loadInvoiceData();
@@ -74,8 +97,22 @@ public class InvoicePanel extends JPanel {
             loadInvoiceData();
         });
 
+        viewButton.addActionListener(_ -> {
+            int selectedRow = invoiceTable.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(parentFrame, "Please select an invoice to view", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String invoiceId = (String) tableModel.getValueAt(selectedRow, 0);
+            Invoice invoice = invoiceService.getInvoiceById(invoiceId);
+            if (invoice != null) {
+                showInvoiceDetailsDialog(parentFrame, invoice);
+            }
+        });
+
         deleteButton.addActionListener(_ -> {
-            int selectedRow = itemTable.getSelectedRow();
+            int selectedRow = invoiceTable.getSelectedRow();
             if (selectedRow == -1) {
                 JOptionPane.showMessageDialog(parentFrame, "Please select an invoice to delete", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -86,6 +123,37 @@ public class InvoicePanel extends JPanel {
             if (result == JOptionPane.YES_OPTION) {
                 invoiceService.deleteInvoice(invoiceId);
                 loadInvoiceData();
+            }
+        });
+
+        searchField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String searchText = searchField.getText();
+                if (searchText.trim().isEmpty()) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+                }
+            }
+        });
+
+        totalAmountFilter.addActionListener(_ -> applyFilter());
+
+        invoiceTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2 && !e.isConsumed()) {
+                    e.consume();
+                    int selectedRow = invoiceTable.getSelectedRow();
+                    if (selectedRow >= 0) {
+                        String invoiceId = (String) tableModel.getValueAt(selectedRow, 0);
+                        Invoice invoice = invoiceService.getInvoiceById(invoiceId);
+                        if (invoice != null) {
+                            showInvoiceDetailsDialog(parentFrame, invoice);
+                        }
+                    }
+                }
             }
         });
     }
@@ -112,7 +180,7 @@ public class InvoicePanel extends JPanel {
                     invoice.getDate()
             });
         });
-        adjustRowHeight(itemTable);
+        adjustRowHeight(invoiceTable);
     }
 
     private void adjustRowHeight(JTable table) {
@@ -126,5 +194,42 @@ public class InvoicePanel extends JPanel {
             }
             table.setRowHeight(row, rowHeight);
         }
+    }
+
+    private void applyFilter() {
+        sorter.setRowFilter(new RowFilter<>() {
+            @Override
+            public boolean include(Entry<? extends DefaultTableModel, ? extends Integer> entry) {
+                boolean totalAmountMatch = true;
+
+                if (totalAmountFilter.getSelectedIndex() != 0) {
+                    double totalAmount = (Double) entry.getValue(4);
+                    switch (totalAmountFilter.getSelectedIndex()) {
+                        case 1:
+                            totalAmountMatch = totalAmount < 100;
+                            break;
+                        case 2:
+                            totalAmountMatch = totalAmount >= 100 && totalAmount <= 500;
+                            break;
+                        case 3:
+                            totalAmountMatch = totalAmount >= 500 && totalAmount <= 1000;
+                            break;
+                        case 4:
+                            totalAmountMatch = totalAmount >= 1000 && totalAmount <= 5000;
+                            break;
+                        case 5:
+                            totalAmountMatch = totalAmount > 5000;
+                            break;
+                    }
+                }
+                return totalAmountMatch;
+            }
+        });
+    }
+
+    private void showInvoiceDetailsDialog(JFrame parentFrame,Invoice invoice) {
+        InvoiceDetailsDialog invoiceDetailsDialog = new InvoiceDetailsDialog(parentFrame ,invoice);
+        invoiceDetailsDialog.setModal(true);
+        invoiceDetailsDialog.setVisible(true);
     }
 }

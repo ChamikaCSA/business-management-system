@@ -62,6 +62,9 @@ public class Payment {
 
     @Override
     public String toString() {
-        return STR."Payment{id='\{id}\{'\''}, invoice=\{invoice}, amount=\{amount}, paymentDate=\{paymentDate}, paymentMethod='\{paymentMethod}\{'\''}\{'}'}";
+        if (id == null) {
+            return "New " + getClass().getSimpleName();
+        }
+        return id + " - " + amount + " (" + paymentDate + ")";
     }
 }
