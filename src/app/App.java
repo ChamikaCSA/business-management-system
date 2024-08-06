@@ -1,6 +1,6 @@
 package app;
 
-import gui.AppGUI;
+import views.AppGUI;
 
 import javax.swing.*;
 

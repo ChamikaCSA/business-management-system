@@ -35,5 +35,6 @@
     </orderEntry>
     <orderEntry type="library" name="Python 3.12 (BusinessManagementSystem) interpreter library" level="application" />
     <orderEntry type="library" name="jfreechart-1.0.19" level="project" />
+    <orderEntry type="library" name="itextpdf-5.5.13.4" level="application" />
   </component>
 </module>

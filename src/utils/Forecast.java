@@ -8,22 +8,12 @@ import java.util.List;
 public class Forecast {
     public static String generateForecast(List<Double> salesData) {
         try {
-            installPythonPackage("statsmodels");
-            String forecast = runPythonScript(salesData);
-            return forecast;
+            return runPythonScript(salesData);
         } catch (Exception e) {
             throw new RuntimeException("Error forecasting sales: " + e.getMessage());
         }
     }
 
-    private static void installPythonPackage(String packageName) throws Exception {
-        ProcessBuilder processBuilder = new ProcessBuilder("pip", "install", packageName);
-        Process process = processBuilder.start();
-        int exitCode = process.waitFor();
-        if (exitCode != 0) {
-            throw new RuntimeException("Failed to install Python package " + packageName);
-        }
-    }
 
     private static String runPythonScript(List<Double> salesData) throws Exception {
         List<String> command = new ArrayList<>();
@@ -32,6 +22,7 @@ public class Forecast {
         for (Double data : salesData) {
             command.add(data.toString());
         }
+        System.out.println(command);
 
         ProcessBuilder processBuilder = new ProcessBuilder(command);
         Process process = processBuilder.start();

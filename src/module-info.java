@@ -5,10 +5,12 @@ module BusinessManagementSystem {
     requires com.formdev.flatlaf;
     requires java.mail;
     requires jfreechart;
+    requires itextpdf;
+    requires activation;
 
     exports app;
-    exports entities;
-    exports services;
+    exports models;
+    exports controllers;
     exports utils;
-    exports gui;
+    exports views;
 }

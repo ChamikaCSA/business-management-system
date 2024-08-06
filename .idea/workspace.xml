@@ -4,43 +4,57 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18dd1b98-15f8-4db4-8867-cf5df5a0459c" name="Changes" comment="Fully implemented all the user functionalities and improved GUIs.">
-      <change afterPath="$PROJECT_DIR$/src/gui/ForgotPasswordPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/InvoiceDetailsDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="18dd1b98-15f8-4db4-8867-cf5df5a0459c" name="Changes" comment="Enhance GUI and Implement Table Filtering and User Authentication Features&#10;&#10;- Implemented login functionality with email and password validation, including UI feedback for invalid inputs and successful logins.&#10;- Introduced forgot password feature in the login form for resetting user passwords&#10;- Developed filtering functionalities in tables based criteria, enhancing the usability management system.&#10;- Integrated a search feature in each table allowing users to filter items by keywords, improving searchability.&#10;- Updated UI elements across the application, including custom color schemes and font settings in `AppGUI.java`, to ensure a consistent and modern user interface.&#10;- Fixed minor bugs and improved error handling in login and management workflows to enhance application stability and user feedback.">
+      <change afterPath="$PROJECT_DIR$/lib/itextpdf-5.5.13.4.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/GoodsReceiveNoteDetailsDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/ScaleLicenseDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/ScaleLicensePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BusinessManagementSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/BusinessManagementSystem.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/eye.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/eye.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/hidden.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/hidden.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/GoodsReceiveNote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/GoodsReceiveNote.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Invoice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Payment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/ScaleLicense.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ScaleLicense.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Supplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Supplier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/AdminMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AdminMenuPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/AppGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/AppGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/CustomerDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/CustomerDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/CustomerPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/CustomerPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/GoodsReceiveNoteDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/GoodsReceiveNoteDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/GoodsReceiveNotePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/GoodsReceiveNotePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/InvoiceDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/InvoiceDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/InvoicePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/InvoicePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/ItemDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/ItemDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/ItemPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/ItemPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/PaymentDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/PaymentDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/PaymentPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/PaymentPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/ReportAnalysisPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/ReportAnalysisPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/SupplierDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SupplierDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/SupplierPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SupplierPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/UserDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/UserDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/UserPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/UserPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/WorkerMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/WorkerMenuPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/InvoiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/InvoiceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/GoodsReceiveNote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/GoodsReceiveNote.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Invoice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Payment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/ScaleLicense.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/ScaleLicense.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Supplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Supplier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/AdminMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/AdminMenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/AppGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/AppGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/CustomerDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/CustomerDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/CustomerPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/CustomerPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/ForgotPasswordPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/ForgotPasswordPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/GoodsReceiveNoteDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/GoodsReceiveNoteDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/GoodsReceiveNotePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/GoodsReceiveNotePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/InvoiceDetailsDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/InvoiceDetailsDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/InvoiceDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/InvoiceDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/InvoicePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/InvoicePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/ItemDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/ItemDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/ItemPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/ItemPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/PaymentDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/PaymentDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/PaymentPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/PaymentPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/ReportAnalysisPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/ReportAnalysisPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/SupplierDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/SupplierDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/SupplierPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/SupplierPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/UserDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/UserDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/UserPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/UserPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/WorkerMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/WorkerMenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/CustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/GoodsReceiveNoteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/GoodsReceiveNoteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/InvoiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/InvoiceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/ItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/ItemService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/PaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/ScaleLicenseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/ScaleLicenseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/SupplierService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/SupplierService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/EmailSender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/Forecast.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Forecast.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/IDGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Generator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/Validation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Validation.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,6 +116,7 @@
     &quot;Application.InvoiceDialog.executor&quot;: &quot;Run&quot;,
     &quot;Application.InvoicePanel.executor&quot;: &quot;Run&quot;,
     &quot;Application.ItemPanel.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Login.executor&quot;: &quot;Run&quot;,
     &quot;Application.MainApp.executor&quot;: &quot;Run&quot;,
     &quot;Application.PaymentDialog.executor&quot;: &quot;Run&quot;,
     &quot;Application.PaymentPanel.executor&quot;: &quot;Run&quot;,
@@ -110,6 +125,7 @@
     &quot;Application.ScaleLicensePanel.executor&quot;: &quot;Run&quot;,
     &quot;Application.UserPanel.executor&quot;: &quot;Run&quot;,
     &quot;Application.WorkerMenuPanel.executor&quot;: &quot;Run&quot;,
+    &quot;Application.hi.executor&quot;: &quot;Run&quot;,
     &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
     &quot;Python.forecast.executor&quot;: &quot;Run&quot;,
     &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
@@ -122,13 +138,13 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-22&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Projects/BusinessManagementSystem/lib/jcommon-1.0.23.jar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Projects/BusinessManagementSystem/lib/itextpdf-5.5.13.4.jar&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Global Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
@@ -142,15 +158,18 @@
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="views" />
       <recent name="gui" />
       <recent name="GUI" />
       <recent name="services" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Projects\BusinessManagementSystem\lib" />
+      <recent name="D:\Projects\BusinessManagementSystem\images" />
       <recent name="D:\Projects\BusinessManagementSystem\icons" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\BusinessManagementSystem\resources" />
       <recent name="D:\Projects\BusinessManagementSystem\lib" />
       <recent name="D:\Projects\BusinessManagementSystem\icons" />
     </key>
@@ -159,6 +178,7 @@
     <configuration name="App" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="app.App" />
       <module name="BusinessManagementSystem" />
+      <option name="VM_PARAMETERS" value="-Dsun.java2d.uiScale=1.0" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -243,7 +263,16 @@
       <workItem from="1720817474956" duration="141000" />
       <workItem from="1720817626870" duration="14749000" />
       <workItem from="1720887037231" duration="55118000" />
-      <workItem from="1721001642180" duration="8438000" />
+      <workItem from="1721001642180" duration="36204000" />
+      <workItem from="1721214815727" duration="1043000" />
+      <workItem from="1721304919321" duration="1619000" />
+      <workItem from="1722115617619" duration="1373000" />
+      <workItem from="1722177211379" duration="26286000" />
+      <workItem from="1722597609137" duration="3509000" />
+      <workItem from="1722684934547" duration="4033000" />
+      <workItem from="1722734564850" duration="9009000" />
+      <workItem from="1722819632465" duration="10362000" />
+      <workItem from="1722906110393" duration="2051000" />
     </task>
     <task id="LOCAL-00001" summary="Implement comprehensive features for admin functionalities">
       <option name="closed" value="true" />
@@ -277,7 +306,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720779454348</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Enhance GUI and Implement Table Filtering and User Authentication Features&#10;&#10;- Implemented login functionality with email and password validation, including UI feedback for invalid inputs and successful logins.&#10;- Introduced forgot password feature in the login form for resetting user passwords&#10;- Developed filtering functionalities in tables based criteria, enhancing the usability management system.&#10;- Integrated a search feature in each table allowing users to filter items by keywords, improving searchability.&#10;- Updated UI elements across the application, including custom color schemes and font settings in `AppGUI.java`, to ensure a consistent and modern user interface.&#10;- Fixed minor bugs and improved error handling in login and management workflows to enhance application stability and user feedback.">
+      <option name="closed" value="true" />
+      <created>1721020771691</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1721020771691</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -305,7 +342,8 @@
     <MESSAGE value="Add complete GUI functionality with authentication and role-based menu navigation&#10;&#10;- Implemented a Java Swing application (AppGUI) for a Business Management System&#10;- Added login authentication with email validation and password show/hide toggle&#10;- Integrated service layers (Customer, GoodsReceiveNote, Invoice, Item, ScaleLicense, Supplier, User)&#10;- Designed admin and worker menus with respective functionalities&#10;- Created report and task panels for comprehensive user interaction&#10;- Ensured error handling and progress indicators for user feedback" />
     <MESSAGE value="Refactor and enhance GUI with refined functionality and UI improvements" />
     <MESSAGE value="Fully implemented all the user functionalities and improved GUIs." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fully implemented all the user functionalities and improved GUIs." />
+    <MESSAGE value="Enhance GUI and Implement Table Filtering and User Authentication Features&#10;&#10;- Implemented login functionality with email and password validation, including UI feedback for invalid inputs and successful logins.&#10;- Introduced forgot password feature in the login form for resetting user passwords&#10;- Developed filtering functionalities in tables based criteria, enhancing the usability management system.&#10;- Integrated a search feature in each table allowing users to filter items by keywords, improving searchability.&#10;- Updated UI elements across the application, including custom color schemes and font settings in `AppGUI.java`, to ensure a consistent and modern user interface.&#10;- Fixed minor bugs and improved error handling in login and management workflows to enhance application stability and user feedback." />
+    <option name="LAST_COMMIT_MESSAGE" value="Enhance GUI and Implement Table Filtering and User Authentication Features&#10;&#10;- Implemented login functionality with email and password validation, including UI feedback for invalid inputs and successful logins.&#10;- Introduced forgot password feature in the login form for resetting user passwords&#10;- Developed filtering functionalities in tables based criteria, enhancing the usability management system.&#10;- Integrated a search feature in each table allowing users to filter items by keywords, improving searchability.&#10;- Updated UI elements across the application, including custom color schemes and font settings in `AppGUI.java`, to ensure a consistent and modern user interface.&#10;- Fixed minor bugs and improved error handling in login and management workflows to enhance application stability and user feedback." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

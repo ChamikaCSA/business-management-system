@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/src/services/CustomerService.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/services/GoodsReceiveNoteService.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/services/InvoiceService.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/services/ItemService.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/services/ScaleLicenseService.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/services/SupplierService.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/services/UserService.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/controllers/CustomerService.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/controllers/GoodsReceiveNoteService.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/controllers/InvoiceService.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/controllers/ItemService.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/controllers/ScaleLicenseService.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/controllers/SupplierService.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/controllers/UserService.java" dialect="GenericSQL" />
   </component>
 </project>
